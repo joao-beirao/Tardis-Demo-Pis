@@ -22,4 +22,4 @@ function cleanup() {
   chip.close();
 }
 
-export default { setLed, cleanup };
+module.exports = { setLed, cleanup };
