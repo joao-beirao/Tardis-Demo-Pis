@@ -1,4 +1,4 @@
-import { Chip, Line } from 'node-libgpiod';
+const { Chip, Line } = require('node-libgpiod');
 
 const chip = new Chip(0);
 
