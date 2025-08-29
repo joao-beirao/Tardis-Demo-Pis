@@ -1,5 +1,5 @@
 const express = require('express');
-import controller from './controller';
+const controller = require('./controller');
 
 
 const app = express();
