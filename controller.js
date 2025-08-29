@@ -1,4 +1,4 @@
-const { Chip, Line } = require('node-libgpiod');
+import { Chip, Line } from 'node-libgpiod';
 
 const chip = new Chip(0);
 
@@ -13,3 +13,13 @@ function setLed(index, value) {
         led[index].setValue(0);
     }
 }
+
+function cleanup() {
+  for (let i = 0; i < led.length; i++) {
+    setLed(i, 0);
+    led[i].release();
+  }
+  chip.close();
+}
+
+export default { setLed, cleanup };
