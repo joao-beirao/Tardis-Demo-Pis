@@ -8,9 +8,9 @@ sudo apt install gpiod libgpiod2 libgpiod-dev libnode-dev node-gyp build-essenti
 For **npm** :
 
 ``` bash
+npm init -y
 npm install node-libgpiod
 npm install express
-npm install gpiod
 ```
 ---
 
@@ -22,5 +22,5 @@ node pi-controller.js
 which will proceed to open port 3000, reachable from: `http://pi-ip:3000`.
 
 
-> **Ex:** [http://p-1-1:3000](http://p-1-1:3000).
+> **Ex:** [http://p-1-1:3000/on](http://p-1-1:3000/on).
 
