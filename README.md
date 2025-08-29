@@ -10,6 +10,7 @@ For **npm** :
 ``` bash
 npm install node-libgpiod
 npm install express
+npm install gpiod
 ```
 ---
 

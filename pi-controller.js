@@ -1,23 +1,32 @@
-const gpiod = require('gpiod');
+const { Chip, Line } = require('node-libgpiod');
+const express = require('express');
 
-// open the gpiochip device
-const chip = gpiod.open('/dev/gpiochip0');
+const app = express();
 
-// get line 17 (BCM GPIO17 = pin 11)
-const line = chip.getLine(17);
+// Keep references alive globally
+const chip = new Chip(0);        // gpiochip0
+const led = new Line(chip, 17);  // GPIO17 (BCM numbering)
 
-// request the line as output, default LOW
-line.requestOutputMode();
+led.requestOutputMode();
 
-// turn LED ON
-line.setValue(1);
-console.log("LED is ON. Press Ctrl+C to exit.");
+app.get('/on', (_req, res) => {
+  led.setValue(1);
+  res.send("LED is ON");
+});
 
-// cleanup on exit
+app.get('/off', (_req, res) => {
+  led.setValue(0);
+  res.send("LED is OFF");
+});
+
 process.on('SIGINT', () => {
-  line.setValue(0); // LED off
-  line.release();
+  led.setValue(0);   // Turn LED off before exit
+  led.release();
   chip.close();
-  console.log("\nLED is OFF. Exiting...");
+  console.log("\nLED OFF, exiting...");
   process.exit();
+});
+
+app.listen(3000, () => {
+  console.log("Server running at http://<pi-ip>:3000");
 });
