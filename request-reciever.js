@@ -2,8 +2,8 @@ const WebSocket  = require('ws');
 const controller = require('./controller');
 const net = require('net');
 
-const JAVA_APP_PORT = 8080;
-const PROXY_PORT = 8081;
+const JAVA_APP_PORT = 8081;
+const PROXY_PORT = 8080;
 const JAVA_HOST = '127.0.0.1';
 
 // Proxy server
