@@ -1,5 +1,13 @@
 const controller = require('./controller');
+const myIp = process.argv[2]; // Pass your IP as a command-line argument
 
+function isMyPacket(packet) {
+  const ip = packet.payload.payload;
+  if (ip && ip.saddr && ip.saddr.addr) {
+    return ip.saddr.addr.join('.') === myIp;
+  }
+  return false;
+}
 const pcap = require('pcap');
 const session = pcap.createSession('wlan0', 'tcp port 9000');
 
@@ -19,15 +27,11 @@ function filterPacket(packet) {
 }
 
 
-
-
-
-
 session.on('packet', (rawPacket) => {
   const packet = pcap.decode.packet(rawPacket);
 
   // Example: Extract and log only source/destination IP and TCP payload length
-  if (filterPacket(packet)) {
+  if (filterPacket(packet) && !isMyPacket(packet)) {
     const ip = packet.payload.payload;
     const tcp = ip.payload;
     console.log(`From ${ip.saddr.addr.join('.')} to ${ip.daddr.addr.join('.')}, payload length: ${tcp.data.length}`);
