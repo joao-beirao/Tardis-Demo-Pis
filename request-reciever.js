@@ -8,33 +8,21 @@ const JAVA_HOST = '127.0.0.1';
 
 // Proxy server
 const server = net.createServer((clientSocket) => {
-  console.log("Client connected");
+  console.log("Incoming connection to proxy");
 
-  // Connect to real app
-  const serverSocket = net.connect(JAVA_APP_PORT, JAVA_HOST);
+  // Connect to Java app
+  const javaSocket = net.connect(JAVA_APP_PORT, JAVA_HOST);
 
-  // Forward client → server
-  clientSocket.on('data', (data) => {
-    console.log("Client → Server:", data.toString());
+  // client -> java
+  clientSocket.pipe(javaSocket);
+  // java -> client
+  javaSocket.pipe(clientSocket);
 
-    //controller.blinkLed(0, 6, 100);
-
-    serverSocket.write(data);
-  });
-
-
-  // Forward server → client
-  serverSocket.on('data', (data) => {
-    console.log("Server → Client:", data.toString());
-    clientSocket.write(data);
-  });
-
-  clientSocket.on('end', () => {
-    console.log("Client disconnected");
-    serverSocket.end();
-  });
+  // Error handling
+  clientSocket.on('error', (err) => console.error("Client socket error:", err));
+  javaSocket.on('error', (err) => console.error("Java socket error:", err));
 });
 
 server.listen(PROXY_PORT, () => {
-  console.log(`Proxy running on port ${PROXY_PORT}, forwarding to ${JAVA_HOST}:${JAVA_APP_PORT}`);
+  console.log(`Proxy listening on port ${PROXY_PORT}, forwarding to ${JAVA_HOST}:${JAVA_APP_PORT}`);
 });
