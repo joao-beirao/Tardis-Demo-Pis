@@ -16,18 +16,16 @@ function setLed(index, value) {
     }
 }
 
-function blinkLed(index) {
-    let TIMES = 3;
+function blinkLed(index, times, interval) {
     let count = 0;
-    let INTERVAL = 500;
     const blink = setInterval(() => {
         setLed(index, count % 2);
         count++;
-        if (count >= 3 * 2) {
+        if (count >= times * 2) {
             clearInterval(blink);
             setLed(index, 0);
         }
-    }, INTERVAL);
+    }, interval);
 }
 
 function cleanup() {

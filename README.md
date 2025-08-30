@@ -13,6 +13,7 @@ npm install node-libgpiod
 npm install express
 npm install onoff
 npm install ws
+npm install net
 ```
 ---
 

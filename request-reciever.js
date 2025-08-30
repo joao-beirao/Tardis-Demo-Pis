@@ -1,48 +1,39 @@
 const WebSocket  = require('ws');
-const Gpio  = require('onoff');
-
 const controller = require('./controller');
+const net = require('net');
 
+const JAVA_APP_PORT = 8081;
+const PROXY_PORT = 8080;
+const JAVA_HOST = '127.0.0.1';
 
+// Proxy server
+const server = net.createServer((clientSocket) => {
+  console.log("Client connected");
 
-// Connect to WebSocket server
-const ws = new WebSocket("ws://p-1-1:8080");
-// Handle connection open
-ws.on("open", () => {
-  console.log("Connected to WebSocket server");
+  // Connect to real app
+  const serverSocket = net.connect(JAVA_APP_PORT, JAVA_HOST);
+
+  // Forward client → server
+  clientSocket.on('data', (data) => {
+    console.log("Client → Server:", data.toString());
+
+    controller.blinkLed(0, 6, 100);
+
+    serverSocket.write(data);
+  });
+
+  // Forward server → client
+  serverSocket.on('data', (data) => {
+    console.log("Server → Client:", data.toString());
+    clientSocket.write(data);
+  });
+
+  clientSocket.on('end', () => {
+    console.log("Client disconnected");
+    serverSocket.end();
+  });
 });
 
-
-// Handle messages
-ws.on("message", (data) => {
-  console.log("Server says:", data.data);
-  try {
-    controller.blinkLed(0);
-
-    /*
-    const json = JSON.parse(data);
-    if (Array.isArray(json.strings)) {
-      // Turn off all LEDs first
-      Object.keys(leds).forEach((c) => setLed(c, 0));
-      // Light up based on strings
-      if (json.strings.includes("error")) setLed("red", 1);
-      if (json.strings.includes("ok")) setLed("green", 1);
-      if (json.strings.includes("info")) setLed("blue", 1);
-    }
-      */
-
-  } catch (err) {
-    console.error("Invalid message:", err);
-  }
-});
-
-// Handle errors
-ws.on("error", (err) => {
-  console.error("WebSocket error:", err);
-});
-
-// Cleanup GPIO on exit
-process.on("SIGINT", () => {
-  controller.cleanup();
-  process.exit();
+server.listen(PROXY_PORT, () => {
+  console.log(`Proxy running on port ${PROXY_PORT}, forwarding to ${JAVA_HOST}:${JAVA_APP_PORT}`);
 });
