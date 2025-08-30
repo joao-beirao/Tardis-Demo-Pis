@@ -16,12 +16,25 @@ function setLed(index, value) {
     }
 }
 
+function blinkLed(index) {
+    let TIMES = 3;
+    let count = 0;
+    let INTERVAL = 500;
+    const blink = setInterval(() => {
+        setLed(index, count % 2);
+        count++;
+        if (count >= 3 * 2) {
+            clearInterval(blink);
+            setLed(index, 0);
+        }
+    }, INTERVAL);
+}
+
 function cleanup() {
   for (let i = 0; i < led.length; i++) {
     setLed(i, 0);
     led[i].release();
   }
-  chip.close();
 }
 
 module.exports = { setLed, cleanup };
