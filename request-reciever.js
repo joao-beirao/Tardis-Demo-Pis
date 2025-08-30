@@ -22,6 +22,7 @@ const server = net.createServer((clientSocket) => {
     serverSocket.write(data);
   });
 
+  
   // Forward server → client
   serverSocket.on('data', (data) => {
     console.log("Server → Client:", data.toString());
