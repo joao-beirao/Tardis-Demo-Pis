@@ -12,7 +12,7 @@ session.on('packet', (rawPacket) => {
   if(ip != null && ip != undefined) {
     const tcp = ip.payload;
 
-    if (ip && tcp && ip.saddr && ip.daddr) {
+    if (ip && tcp && ip.saddr && ip.daddr && tcp.data) {
       console.log(`From ${ip.saddr.addr.join('.')} to ${ip.daddr.addr.join('.')}, payload length: ${tcp.data ? tcp.data.length : 0}`);
     }
   }
