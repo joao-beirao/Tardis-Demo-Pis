@@ -9,17 +9,13 @@ for (let i = 0; i < led.length; i++) {
 }
 
 function setLed(index, value) {
-    if(value){
-        led[index].setValue(1);
-    }else{
-        led[index].setValue(0);
-    }
+  led[index].setValue(value);
 }
 
 function blinkLed(index, times, interval) {
     let count = 0;
     const blink = setInterval(() => {
-        setLed(index, ((count % 2)==1));
+        setLed(index, count % 2);
         count++;
         if (count >= times * 2) {
             clearInterval(blink);
