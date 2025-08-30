@@ -9,11 +9,7 @@ For **npm** :
 
 ``` bash
 npm init -y
-npm install node-libgpiod
-npm install express
-npm install onoff
-npm install ws
-npm install net
+npm install node-libgpiod express onoff ws net
 ```
 ---
 
