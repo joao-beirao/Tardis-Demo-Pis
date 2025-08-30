@@ -9,7 +9,9 @@ function filterPacket(packet) {
     if (ip.saddr && ip.daddr) {
       const tcp = ip.payload;
       if (tcp && tcp.data) {
-        return true;
+        if (tcp.data.length > 92) {
+          return true;
+        }
       }
     }
   }
