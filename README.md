@@ -2,14 +2,14 @@
 ### Necessary packages:
 
 ``` 
-sudo apt install gpiod libgpiod2 libgpiod-dev libnode-dev node-gyp build-essential
+sudo apt install gpiod libgpiod2 libgpiod-dev libnode-dev node-gyp build-essential libpcap-dev
 ```
 
 For **npm** :
 
 ``` bash
 npm init -y
-npm install node-libgpiod express onoff ws net
+npm install node-libgpiod express onoff ws net pcap
 ```
 ---
 
