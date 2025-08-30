@@ -6,8 +6,9 @@ const app = express();
 
 
 app.get('/on', (_req, res) => {
-    controller.setLed(0, 1);
-    res.send("LED is ON");
+  controller.blinkLed(0, 6, 100);
+  controller.setLed(0, 1);
+  res.send("LED is ON");
 });
 
 

@@ -35,4 +35,4 @@ function cleanup() {
   }
 }
 
-module.exports = { setLed, cleanup };
+module.exports = { setLed, cleanup , blinkLed };
