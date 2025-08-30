@@ -6,7 +6,7 @@ const controller = require('./controller');
 
 
 // Connect to WebSocket server
-const ws = new WebSocket("ws://p-1-1:8080");
+const ws = new WebSocket("ws://localhost:8080");
 // Handle connection open
 ws.on("open", () => {
   console.log("Connected to WebSocket server");
