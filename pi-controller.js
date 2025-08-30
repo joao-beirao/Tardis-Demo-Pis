@@ -7,13 +7,13 @@ const app = express();
 
 app.get('/on', (_req, res) => {
   controller.blinkLed(0, 6, 100);
-  controller.setLed(0, 1);
+  controller.setLed(0, true);
   res.send("LED is ON");
 });
 
 
 app.get('/off', (_req, res) => {
-  controller.setLed(0, 0);
+  controller.setLed(0, false);
   res.send("LED is OFF");
 });
 
