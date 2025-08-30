@@ -17,12 +17,12 @@ const server = net.createServer((clientSocket) => {
   clientSocket.on('data', (data) => {
     console.log("Client → Server:", data.toString());
 
-    controller.blinkLed(0, 6, 100);
+    //controller.blinkLed(0, 6, 100);
 
     serverSocket.write(data);
   });
 
-  
+
   // Forward server → client
   serverSocket.on('data', (data) => {
     console.log("Server → Client:", data.toString());
