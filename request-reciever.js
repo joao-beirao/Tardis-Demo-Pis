@@ -1,7 +1,7 @@
 const controller = require('./controller');
 
 const pcap = require('pcap');
-const session = pcap.createSession('wlo1', 'tcp port 9000');
+const session = pcap.createSession('wlan0', 'tcp port 9000');
 
 session.on('packet', (rawPacket) => {
   const packet = pcap.decode.packet(rawPacket);
