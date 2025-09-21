@@ -2,7 +2,7 @@
 ### Necessary packages:
 
 ``` 
-sudo apt install gpiod libgpiod2 libgpiod-dev libnode-dev node-gyp build-essential libpcap-dev
+sudo apt install npm gpiod libgpiod2 libgpiod-dev libnode-dev node-gyp build-essential libpcap-dev
 ```
 
 For **npm** :
