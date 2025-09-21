@@ -4,7 +4,7 @@ const EventStates = require('./constants');
 
 let stateList = [EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED];
 
-let APIRRead = getDCRAvailableEvents("p-1-1");
+let APIRRead = await getDCRAvailableEvents("p-1-1");
 console.log(APIRRead);
 /*
 APIRRead.forEach((event, i) => {

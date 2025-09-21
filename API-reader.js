@@ -38,21 +38,21 @@ function getDCREnableEvents(device){
     });
 }
 // * Fetches DCR available events and converts to boolean pairs
-function getDCRAvailableEvents(device){
+async function getDCRAvailableEvents(device){
     let result = [];
-    let response = getApiData(BASE_URL(device));
-    response.then((data) => {
-        const boolPair = Array.isArray(data)
-            ? data.map(item => [!!item.pending, !!item.included])
+    let response = await getApiData(BASE_URL(device));
+    if (response) {
+        const boolPair = Array.isArray(response)
+            ? response.map(item => [!!item.pending, !!item.included])
             : [];
         console.log('Bool pairs:', boolPair);
         result = boolPair;
-    })
-    .catch((err) => {
-        console.error('Error:', err);
-    });
+    }
     return result;
 }
+
+module.exports = { getDCRAvailableEvents };
+
 
 module.exports = { getDCRAvailableEvents };
 
