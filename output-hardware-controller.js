@@ -1,5 +1,5 @@
 const { Chip, Line } = require('node-libgpiod');
-
+const EventStates = require('./constants');
 const chip = new Chip(0);
 
 /*
@@ -25,19 +25,19 @@ function setLed(index, value) {
 
 function setState(index, state) {
   switch (state) {
-      case STATE_NOT_PENDING_INCLUDED:
+      case EventStates.STATE_NOT_PENDING_INCLUDED:
           led[0][index].setValue(0);
           led[1][index].setValue(1);
           break;
-      case STATE_NOT_PENDING_EXCLUDED:
+      case EventStates.STATE_NOT_PENDING_EXCLUDED:
           led[0][index].setValue(0);
           led[1][index].setValue(0);
           break;
-      case STATE_PENDING_INCLUDED:
+      case EventStates.STATE_PENDING_INCLUDED:
           led[0][index].setValue(1);
           led[1][index].setValue(1);            
           break;
-      case STATE_PENDING_EXCLUDED:
+      case EventStates.STATE_PENDING_EXCLUDED:
           led[0][index].setValue(1);
           led[1][index].setValue(0);
           break;
