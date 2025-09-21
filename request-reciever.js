@@ -1,4 +1,4 @@
-const controller = require('./controller');
+const controller = require('./output-hardware-controller');
 const myIp = process.argv[2]; // Pass your IP as a command-line argument
 
 function isMyPacket(packet) {
