@@ -19,27 +19,41 @@ for (let i = 0; i < led.length; i++) {
 
 
 // * Change Led State
-function setLed(index, value) {
-  led[index].forEach(led => led.setValue(value));
+function turnOn(i, j) {
+  try {
+    led[i][j].setValue(1);
+  } catch (error) {
+    console.error('Error turning on LED:', error);
+  }
 }
 
+// * Change Led State
+function turnOff(i, j) {
+  try {
+    led[i][j].setValue(0);
+  } catch (error) {
+    console.error('Error turning off LED:', error);
+  }
+}
+
+// * Set state based on EventStates
 function setState(index, state) {
   switch (state) {
       case EventStates.STATE_NOT_PENDING_INCLUDED:
-          led[0][index].setValue(0);
-          led[1][index].setValue(1);
+          turnOff(0, index);
+          turnOn(1, index);
           break;
       case EventStates.STATE_NOT_PENDING_EXCLUDED:
-          led[0][index].setValue(0);
-          led[1][index].setValue(0);
+          turnOff(0, index);
+          turnOff(1, index);
           break;
       case EventStates.STATE_PENDING_INCLUDED:
-          led[0][index].setValue(1);
-          led[1][index].setValue(1);            
+          turnOn(0, index);
+          turnOn(1, index);
           break;
       case EventStates.STATE_PENDING_EXCLUDED:
-          led[0][index].setValue(1);
-          led[1][index].setValue(0);
+          turnOn(0, index);
+          turnOff(1, index);
           break;
       default:
           console.log('Unknown state');
