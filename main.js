@@ -7,6 +7,5 @@ const PORT = 8080;
 
 getDCRAvailableEvents("p-1-1");
 
-for (let i = 0; i < 3; i++) {
-    controller.setState(i, EventStates.STATE_PENDING_INCLUDED);
-}
+controller.setState(0, EventStates.STATE_PENDING_INCLUDED);
+
