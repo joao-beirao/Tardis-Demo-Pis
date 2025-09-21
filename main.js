@@ -12,9 +12,9 @@ getDCRAvailableEvents("p-1-1").then((data) => {
         if (event[0] && event[1]) {
             stateList[i] = EventStates.STATE_PENDING_INCLUDED;
         } else if (event[0] && !event[1]) {
-            stateList[i] = EventStates.STATE_PENDING_EXCLUDED;
-        } else if (!event[0] && event[1]) {
             stateList[i] = EventStates.STATE_NOT_PENDING_INCLUDED;
+        } else if (!event[0] && event[1]) {
+            stateList[i] = EventStates.STATE_PENDING_EXCLUDED;
         } else {
             stateList[i] = EventStates.STATE_NOT_PENDING_EXCLUDED;
         }
