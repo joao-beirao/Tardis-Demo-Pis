@@ -3,7 +3,6 @@ const { getDCRAvailableEvents } = require('./API-reader');
 const EventStates = require('./constants');
 
 
-const LOCALHOST = "localhost";
 const PORT = 8080;
 
 getDCRAvailableEvents("p-1-1");
