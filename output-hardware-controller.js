@@ -10,7 +10,12 @@ const chip = new Chip(0);
 const led = [
   [new Line(chip, 17), new Line(chip, 27), new Line(chip, 22)], //PENDING
   [new Line(chip, 5), new Line(chip, 6), new Line(chip, 13)],   //INCLUDED
-];  // GPIO17, GPIO27, GPIO22 (BCM numbering)
+];
+const ledStates = [
+  [0, 0, 0],
+  [0, 0, 0],
+];
+
 for (let i = 0; i < led.length; i++) {
   for (let j = 0; j < led[i].length; j++) {
     led[i][j].requestOutputMode();
@@ -20,15 +25,17 @@ for (let i = 0; i < led.length; i++) {
 
 // * Change Led State
 function turnOn(i, j) {
-  if (led[i][j].getValue() != 1) {
+  if (ledStates[i][j] != 1) {
     led[i][j].setValue(1);
+    ledStates[i][j] = 1;
   }
 }
 
 // * Change Led State
 function turnOff(i, j) {
-  if (led[i][j].getValue() != 0) {
+  if (ledStates[i][j] != 0) {
     led[i][j].setValue(0);
+    ledStates[i][j] = 0;
   }
 }
 
@@ -57,21 +64,6 @@ function setState(index, state) {
 }
 
 
-
-// !! Not Working !?
-function blinkLed(index, times, interval) {
-    let count = 0;
-    const blink = setInterval(() => {
-        setLed(index, count % 2);
-        count++;
-        if (count >= times * 2) {
-            clearInterval(blink);
-            setLed(index, 0);
-        }
-    }, interval);
-}
-
-
 // * Cleanup on exit
 function cleanup() {
   for (let i = 0; i < led.length; i++) {
@@ -81,4 +73,4 @@ function cleanup() {
 }
 
 
-module.exports = { cleanup , blinkLed, setState };
+module.exports = { cleanup, setState };
