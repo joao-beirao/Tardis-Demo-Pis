@@ -31,12 +31,14 @@ async function update() {
 
     }); 
 }
-
-while (true) {
-    await update();
-    await wait(5000);
+async function main() {
+    while (true) {
+        await update();
+        await wait(5000);
+    }
 }
 
+main();
 
 
 
