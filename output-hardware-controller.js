@@ -85,4 +85,4 @@ function cleanup() {
 }
 
 
-module.exports = { setLed, cleanup , blinkLed, setState };
+module.exports = { cleanup , blinkLed, setState };
