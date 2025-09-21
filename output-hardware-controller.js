@@ -12,13 +12,15 @@ const led = [
   [new Line(chip, 5), new Line(chip, 6), new Line(chip, 13)],   //INCLUDED
 ];  // GPIO17, GPIO27, GPIO22 (BCM numbering)
 for (let i = 0; i < led.length; i++) {
-    led[i].requestOutputMode();
+  for (let j = 0; j < led[i].length; j++) {
+    led[i][j].requestOutputMode();
+  }
 }
 
 
 // * Change Led State
 function setLed(index, value) {
-  led[index].setValue(value);
+  led[index].forEach(led => led.setValue(value));
 }
 
 function setState(index, state) {
