@@ -29,6 +29,7 @@ function turnOn(i, j) {
 function turnOff(i, j) {
   if (led[i][j].getValue() != 0) {
     led[i][j].setValue(0);
+  }
 }
 
 // * Set state based on EventStates
