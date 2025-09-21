@@ -2,7 +2,7 @@ const controller = require('./output-hardware-controller');
 const { getDCRAvailableEvents } = require('./API-reader');
 const EventStates = require('./constants');
 
-function wait(ms) {
+async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
@@ -33,7 +33,7 @@ async function update() {
 }
 
 while (true) {
-    update();
+    await update();
     await wait(5000);
 }
 
