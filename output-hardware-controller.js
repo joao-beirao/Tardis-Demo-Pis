@@ -20,20 +20,15 @@ for (let i = 0; i < led.length; i++) {
 
 // * Change Led State
 function turnOn(i, j) {
-  try {
+  if (led[i][j].getValue() != 1) {
     led[i][j].setValue(1);
-  } catch (error) {
-    console.error('Error turning on LED:', error);
   }
 }
 
 // * Change Led State
 function turnOff(i, j) {
-  try {
+  if (led[i][j].getValue() != 0) {
     led[i][j].setValue(0);
-  } catch (error) {
-    console.error('Error turning off LED:', error);
-  }
 }
 
 // * Set state based on EventStates
