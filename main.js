@@ -5,7 +5,8 @@ const EventStates = require('./constants');
 let stateList = [EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED];
 
 let APIRRead = getDCRAvailableEvents("p-1-1");
-
+console.log(APIRRead);
+/*
 APIRRead.forEach((event, i) => {
     if (event[0] && event[1]) {
         stateList[i] = EventStates.STATE_PENDING_INCLUDED;
@@ -17,7 +18,7 @@ APIRRead.forEach((event, i) => {
         stateList[i] = EventStates.STATE_NOT_PENDING_EXCLUDED;
     }
 });
-
+*/
 for (let i = 0; i < 3; i++) {
      controller.setState(i, stateList[i]);
 }
