@@ -19,9 +19,12 @@ getDCRAvailableEvents("p-1-1").then((data) => {
             stateList[i] = EventStates.STATE_NOT_PENDING_EXCLUDED;
         }
     });
+
+    for (let i = 0; i < 3; i++) {
+     controller.setState(i, stateList[i]);
+    }
+
 }); 
 
-for (let i = 0; i < 3; i++) {
-     controller.setState(i, stateList[i]);
-}
+
 
