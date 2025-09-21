@@ -6,3 +6,5 @@ for (let i = 0; i < 3; i++) {
         controller.turnOff(i, j);
     }
 }
+
+    controller.cleanup();

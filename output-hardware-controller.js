@@ -11,7 +11,8 @@ const led = [
   [new Line(chip, 17), new Line(chip, 27), new Line(chip, 22)], //PENDING
   [new Line(chip, 5), new Line(chip, 6), new Line(chip, 13)],   //INCLUDED
 ];
-const ledStates = [
+
+let ledStates = [
   [0, 0, 0],
   [0, 0, 0],
 ];
@@ -67,10 +68,13 @@ function setState(index, state) {
 // * Cleanup on exit
 function cleanup() {
   for (let i = 0; i < led.length; i++) {
-    setLed(i, 0);
-    led[i].release();
+    for (let j = 0; j < led[i].length; j++) {
+      turnOff(i, j);
+      led[i][j].release();
+    }
   }
+  chip.close();
 }
 
 
-module.exports = { cleanup, setState };
+module.exports = { cleanup, setState, turnOff, turnOn };
