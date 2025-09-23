@@ -11,7 +11,6 @@ button.requestInputMode();
 setInterval(() => {
   const value = button.getValue();
   if (buttonState !== value) {
-    console.log("Button state changed:", value);
     buttonState = value;
     if (buttonState === 1) {
       console.log("PRESSED");
