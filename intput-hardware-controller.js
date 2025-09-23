@@ -14,7 +14,7 @@ setInterval(() => {
   if (buttonState !== value && value === 1) {
     console.log("PRESSED");
   }
-}, 500);
+}, 200);
 
 function cleanup() {
   button.release();
