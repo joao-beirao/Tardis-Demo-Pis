@@ -1,32 +1,23 @@
 const { Chip, Line } = require('node-libgpiod');
 const chip = new Chip(0);
 
-const buttons = [
-  new Line(chip, 21),
-];
+const button = new Line(chip, 21);
 
-let buttonStates = [0, 0, 0];
+let buttonState = 0;
 
 // Request input mode
-for (let i = 0; i < buttons.length; i++) {
-  buttons[i].requestInputMode();
-}
+button.requestInputMode();
 
 // Poll values every 100 ms
 setInterval(() => {
-  for (let i = 0; i < buttons.length; i++) {
-    const value = buttons[i].getValue();
-    if (buttonStates[i] !== value) {
-      buttonStates[i] = value;
-      console.log(value);
-    }
+  const value = button.getValue();
+  if (buttonState !== value && value === 1) {
+    console.log("PRESSED");
   }
 }, 100);
 
 function cleanup() {
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].release();
-  }
+  button.release();
   chip.close();
 }
 
