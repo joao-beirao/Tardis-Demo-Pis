@@ -12,9 +12,10 @@ button.requestInputMode();
 setInterval(() => {
   const value = button.getValue();
   if (buttonState !== value && value === 1) {
+    buttonState = value;
     console.log("PRESSED");
   }
-}, 200);
+}, 100);
 
 function cleanup() {
   button.release();
