@@ -24,7 +24,7 @@ function setOnButtonPress(callback) {
         const value = button.getValue();
         if (buttonState !== value) {
             buttonState = value;
-            if (buttonState != 0) {
+            if (value != 0) {
                 callback();
             }
         }
