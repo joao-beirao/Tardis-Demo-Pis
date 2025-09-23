@@ -1,29 +1,30 @@
 const { Chip, Line } = require('node-libgpiod');
 const chip = new Chip(0);
 
-// Example pins for 3 buttons
+// 3 buttons on BCM 23, 24, 25
 const buttons = [
-  new Line(chip, 21),
-  new Line(chip, 20),
-  new Line(chip, 16),
+  new Line(chip, 23),
+  new Line(chip, 24),
+  new Line(chip, 25),
 ];
 
 let buttonStates = [0, 0, 0];
 
+// Request input mode
 for (let i = 0; i < buttons.length; i++) {
-  // Request line as input with both edge detection
-  buttons[i].requestInputMode({ edge: 'both' });
-
-  // Subscribe to changes
-  buttons[i].on('change', (value) => {
-    buttonStates[i] = value;
-    console.log(`Button ${i} changed: ${value ? 'Pressed' : 'Released'}`);
-  });
+  buttons[i].requestInputMode();
 }
 
-function getButton(i) {
-  return buttons[i].getValue();
-}
+// Poll values every 100 ms
+setInterval(() => {
+  for (let i = 0; i < buttons.length; i++) {
+    const value = buttons[i].getValue();
+    if (buttonStates[i] !== value) {
+      buttonStates[i] = value;
+      console.log(`Button ${i} is now ${value ? 'HIGH' : 'LOW'}`);
+    }
+  }
+}, 100);
 
 function cleanup() {
   for (let i = 0; i < buttons.length; i++) {
@@ -32,4 +33,8 @@ function cleanup() {
   chip.close();
 }
 
-module.exports = { getButton, buttonStates, cleanup };
+process.on('SIGINT', () => {
+  cleanup();
+  console.log('Clean exit');
+  process.exit();
+});
