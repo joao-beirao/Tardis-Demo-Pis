@@ -76,5 +76,10 @@ function cleanup() {
   chip.close();
 }
 
+process.on('SIGINT', () => {
+  cleanup();
+  console.log('Clean exit');
+  process.exit();
+});
 
 module.exports = { cleanup, setState, turnOff, turnOn };

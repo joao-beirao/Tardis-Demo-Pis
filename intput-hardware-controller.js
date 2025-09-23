@@ -1,7 +1,6 @@
 const { Chip, Line } = require('node-libgpiod');
 const chip = new Chip(0);
 
-// 3 buttons on BCM 23, 24, 25
 const buttons = [
   new Line(chip, 20),
   new Line(chip, 21),
@@ -21,7 +20,7 @@ setInterval(() => {
     const value = buttons[i].getValue();
     if (buttonStates[i] !== value) {
       buttonStates[i] = value;
-      console.log(`Button ${i} is now ${value ? 'HIGH' : 'LOW'}`);
+      console.log(value);
     }
   }
 }, 100);
