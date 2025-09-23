@@ -12,7 +12,7 @@ setInterval(() => {
   const value = button.getValue();
   if (buttonState !== value) {
     buttonState = value;
-    if (buttonState === 1) {
+    if (buttonState != 0) {
       console.log("PRESSED");
     }
   }
