@@ -34,7 +34,7 @@ async function update() {
 async function main() {
     while (true) {
         await update();
-        await wait(5000);
+        await wait(1000);
     }
 }
 
