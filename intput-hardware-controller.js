@@ -19,13 +19,27 @@ setInterval(() => {
   }
 }, 100);
 
+function setOnButtonPress(callback) {
+    setInterval(() => {
+        const value = button.getValue();
+        if (buttonState !== value) {
+            buttonState = value;
+            if (buttonState != 0) {
+                callback();
+            }
+        }
+    }, 100);
+}
+
 function cleanup() {
-  button.release();
-  chip.close();
+    button.release();
+    chip.close();
 }
 
 process.on('SIGINT', () => {
-  cleanup();
-  console.log('Clean exit');
-  process.exit();
+    cleanup();
+    console.log('Clean exit');
+    process.exit();
 });
+
+module.exports = { setOnButtonPress, cleanup };
