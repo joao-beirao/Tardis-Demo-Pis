@@ -3,9 +3,9 @@ const chip = new Chip(0);
 
 // 3 buttons on BCM 23, 24, 25
 const buttons = [
-  new Line(chip, 23),
-  new Line(chip, 24),
-  new Line(chip, 25),
+  new Line(chip, 20),
+  new Line(chip, 21),
+  new Line(chip, 16),
 ];
 
 let buttonStates = [0, 0, 0];
