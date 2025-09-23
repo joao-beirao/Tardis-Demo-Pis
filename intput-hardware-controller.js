@@ -7,7 +7,7 @@ let buttonState = 0;
 
 // Request input mode
 button.requestInputMode();
-
+/*
 setInterval(() => {
   const value = button.getValue();
   if (buttonState !== value) {
@@ -18,7 +18,7 @@ setInterval(() => {
     }
   }
 }, 100);
-
+*/
 function setOnButtonPress(callback) {
     setInterval(() => {
         const value = button.getValue();
