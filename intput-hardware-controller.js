@@ -2,9 +2,7 @@ const { Chip, Line } = require('node-libgpiod');
 const chip = new Chip(0);
 
 const buttons = [
-  new Line(chip, 20),
   new Line(chip, 21),
-  new Line(chip, 16),
 ];
 
 let buttonStates = [0, 0, 0];
