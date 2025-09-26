@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/joao-beirao/Tardis-Demo-Pis/issues"
   },
-  "homepage": "https://github.com/joao-beirao/Tardis-Demo-Pis#readme"
+  "homepage": "https://github.com/joao-beirao/Tardis-Demo-Pis#readme",
+  "dependencies": {
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-use-websocket": "^4.13.0"
+  }
 }

@@ -37,6 +37,8 @@ function getDCREnableEvents(device){
         console.error('Error:', err);
     });
 }
+
+
 // * Fetches DCR available events and converts to boolean pairs
 async function getDCRAvailableEvents(device){
     let result = [];
