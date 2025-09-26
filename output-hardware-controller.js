@@ -69,7 +69,6 @@ function setState(index, state) {
 function cleanup() {
   for (let i = 0; i < led.length; i++) {
     for (let j = 0; j < led[i].length; j++) {
-      turnOff(i, j);
       led[i][j].release();
     }
   }
