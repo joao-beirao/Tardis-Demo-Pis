@@ -24,15 +24,17 @@ async function updateEvent(eventId, eventData) {
 async function executeConsume() {
 
     const CONSUME_ID = '_csm_2';
-    const VALUE = 10;
     
-    const BODY = {  
-        "eventID": CONSUME_ID,
+    const BODY =   
+    {
+        "eventID": "_csm_2",
         "value": {
             "type": "Record",
             "value": {
-                "type": "Number",
-                "value": VALUE
+                "kw": {
+                    "type": "Number",
+                    "value": 10
+                }
             }
         }
     };
