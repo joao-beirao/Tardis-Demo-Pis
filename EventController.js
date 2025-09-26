@@ -45,6 +45,6 @@ async function executeConsume() {
     }
 }
 
-adync
+executeConsume();
 
 module.exports = { executeConsume };
