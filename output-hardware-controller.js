@@ -73,7 +73,6 @@ function cleanup() {
       led[i][j].release();
     }
   }
-  chip.close();
 }
 
 process.on('SIGINT', () => {
