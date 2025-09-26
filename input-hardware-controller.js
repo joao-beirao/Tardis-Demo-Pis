@@ -1,5 +1,5 @@
 const { Chip, Line } = require('node-libgpiod');
-const chip = new Chip(4);
+const chip = new Chip(0);
 
 const button = new Line(chip, 21);
 
