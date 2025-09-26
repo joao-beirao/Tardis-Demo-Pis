@@ -47,7 +47,7 @@ async function getDCRAvailableEvents(device){
         const boolPair = Array.isArray(response)
             ? response.map(item => [!!item.pending, !!item.included])
             : [];
-        console.log('Bool pairs:', boolPair);
+        // debug console.log('Bool pairs:', boolPair);
         result = boolPair;
     }
     return result;
