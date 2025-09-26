@@ -1,4 +1,3 @@
-const controller = require('./output-hardware-controller');
 const { getDCRAvailableEvents } = require('./API-reader');
 const EventStates = require('./constants');
 const { setOnButtonPress } = require('./input-hardware-controller');
@@ -9,6 +8,64 @@ async function wait(ms) {
 }
 
 let stateList = [EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED];
+
+const led = [
+  [new Line(chip, 17), new Line(chip, 27), new Line(chip, 22)], //PENDING
+  [new Line(chip, 5), new Line(chip, 6), new Line(chip, 13)],   //INCLUDED
+];
+
+let ledStates = [
+  [0, 0, 0],
+  [0, 0, 0],
+];
+
+for (let i = 0; i < led.length; i++) {
+  for (let j = 0; j < led[i].length; j++) {
+    led[i][j].requestOutputMode();
+  }
+}
+
+
+// * Change Led State
+function turnOn(i, j) {
+  if (ledStates[i][j] != 1) {
+    led[i][j].setValue(1);
+    ledStates[i][j] = 1;
+  }
+}
+
+// * Change Led State
+function turnOff(i, j) {
+  if (ledStates[i][j] != 0) {
+    led[i][j].setValue(0);
+    ledStates[i][j] = 0;
+  }
+}
+
+// * Set state based on EventStates
+function setState(index, state) {
+  switch (state) {
+      case EventStates.STATE_NOT_PENDING_INCLUDED:
+          turnOff(0, index);
+          turnOn(1, index);
+          break;
+      case EventStates.STATE_NOT_PENDING_EXCLUDED:
+          turnOff(0, index);
+          turnOff(1, index);
+          break;
+      case EventStates.STATE_PENDING_INCLUDED:
+          turnOn(0, index);
+          turnOn(1, index);
+          break;
+      case EventStates.STATE_PENDING_EXCLUDED:
+          turnOn(0, index);
+          turnOff(1, index);
+          break;
+      default:
+          console.log('Unknown state');
+  }
+}
+
 
 async function update() {
     getDCRAvailableEvents("p-1-1").then((data) => {
@@ -28,7 +85,7 @@ async function update() {
         });
 
         for (let i = 0; i < 3; i++) {
-        controller.setState(i, stateList[i]);
+        setState(i, stateList[i]);
         }
 
     }); 
