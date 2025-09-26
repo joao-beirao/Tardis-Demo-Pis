@@ -1,6 +1,8 @@
 const controller = require('./output-hardware-controller');
 const { getDCRAvailableEvents } = require('./API-reader');
 const EventStates = require('./constants');
+const { setOnButtonPress } = require('./input-hardware-controller');
+const { executeConsume } = require('./EventController');
 
 async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -31,7 +33,9 @@ async function update() {
 
     }); 
 }
+
 async function main() {
+    setOnButtonPress(executeConsume());
     while (true) {
         await update();
         await wait(1000);
