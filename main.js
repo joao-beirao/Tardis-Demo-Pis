@@ -44,9 +44,9 @@ function updateLEDs(){
     if (stateList[i] === EventStates.STATE_NOT_PENDING_INCLUDED) {
       output.turnOff(0, i);
       output.turnOn(1, i);
-    } /*else if (stateList[i] === EventStates.STATE_NOT_PENDING_EXCLUDED) {
+    } else if (stateList[i] === EventStates.STATE_NOT_PENDING_EXCLUDED) {
       output.turnOff(0, i);
-      output.turnOff(1, i);
+      output.turnOff(1, i);/*
     } else if (stateList[i] === EventStates.STATE_PENDING_INCLUDED) {
       output.turnOn(0, i);
       output.turnOn(1, i);
