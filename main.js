@@ -10,6 +10,11 @@ async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+for (let i = 0; i < 2; i++) {
+    for (let j = 0; j < 3; j++) {
+        controller.turnOn(i, j);
+    }
+}
 
 async function update() {
     await getDCRAvailableEvents("p-1-1").then( (data) => {
