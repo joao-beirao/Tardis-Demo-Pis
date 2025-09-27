@@ -13,27 +13,23 @@ async function wait(ms) {
 
 async function update() {
     await getDCRAvailableEvents("p-1-1").then( (data) => {
-
         console.log(data);
-
         data.forEach((event, i) => {
             if (event[0] && event[1]) {
-              output.turnOff(0, i);
-              output.turnOn(1, i);
+                stateList[i] = EventStates.STATE_PENDING_INCLUDED;
             } else if (event[0] && !event[1]) {
-                output.turnOff(0, i);
-                output.turnOff(1, i);
+                stateList[i] = EventStates.STATE_NOT_PENDING_INCLUDED;
             } else if (!event[0] && event[1]) {
-                output.turnOn(0, i);
-                output.turnOff(1, i);
+                stateList[i] = EventStates.STATE_PENDING_EXCLUDED;
             } else {
-                output.turnOff(0, i);
-                output.turnOff(1, i);
+                stateList[i] = EventStates.STATE_NOT_PENDING_EXCLUDED;
             }
         });
-
-
     }); 
+
+    for (let i = 0; i < 3; i++) {
+      output.setState(i, stateList[i]);
+    }
 }
 
 async function main() {
