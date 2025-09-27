@@ -34,22 +34,24 @@ async function updateStates() {
 }
 
 function updateLEDs(){
-
+  
+    output.turnOn(0, 0);
+    output.turnOff(1, 0);
   
   for (let i = 0; i < 3; i++) {
-    const idx = parseInt(i, 10);
-    if (stateList[idx] === EventStates.STATE_NOT_PENDING_INCLUDED) {
-      output.turnOff(0, idx);
-      output.turnOn(1, idx);
-    } else if (stateList[idx] === EventStates.STATE_NOT_PENDING_EXCLUDED) {
-      output.turnOff(0, idx);
-      output.turnOff(1, idx);
-    } else if (stateList[idx] === EventStates.STATE_PENDING_INCLUDED) {
-      output.turnOn(0, idx);
-      output.turnOn(1, idx);
-    } else if (stateList[idx] === EventStates.STATE_PENDING_EXCLUDED) {
-      output.turnOn(0, idx);
-      output.turnOff(1, idx);
+    console.log(`State of ${i}: ${stateList[i]}`);
+    if (stateList[i] === EventStates.STATE_NOT_PENDING_INCLUDED) {
+      output.turnOff(0, i);
+      output.turnOn(1, i);
+    } else if (stateList[i] === EventStates.STATE_NOT_PENDING_EXCLUDED) {
+      output.turnOff(0, i);
+      output.turnOff(1, i);
+    } else if (stateList[i] === EventStates.STATE_PENDING_INCLUDED) {
+      output.turnOn(0, i);
+      output.turnOn(1, i);
+    } else if (stateList[i] === EventStates.STATE_PENDING_EXCLUDED) {
+      output.turnOn(0, i);
+      output.turnOff(1, i);
     } else {
       console.log('Unknown state');
     }
