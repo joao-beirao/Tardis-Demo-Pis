@@ -4,7 +4,7 @@ const { setOnButtonPress } = require('./input-hardware-controller');
 const { executeConsume } = require('./EventController');
 const { Chip, Line } = require('node-libgpiod');
 
-const chip = new Chip(0);
+const chip = new Chip(4);
 
 async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
