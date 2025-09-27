@@ -46,7 +46,7 @@ function turnOff(i, j) {
 }
 
 // * Set state based on EventStates
-function setState(index, state) {
+async function setState(index, state) {
   switch (state) {
       case EventStates.STATE_NOT_PENDING_INCLUDED:
           turnOff(0, index);
@@ -71,7 +71,7 @@ function setState(index, state) {
 
 
 async function update() {
-    await getDCRAvailableEvents("p-1-1").then((data) => {
+    await getDCRAvailableEvents("p-1-1").then( async (data) => {
 
         console.log(data);
 
@@ -88,7 +88,7 @@ async function update() {
         });
 
         for (let i = 0; i < 3; i++) {
-          //setState(i, stateList[i]);
+          await setState(i, stateList[i]);
         }
 
     }); 
