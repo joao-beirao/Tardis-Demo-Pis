@@ -4,7 +4,7 @@ const { setOnButtonPress } = require('./input-hardware-controller');
 const { executeConsume } = require('./EventController');
 const output = require('./output-hardware-controller');
 
-let stateList = [EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED];
+const stateList = [EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED, EventStates.STATE_NOT_PENDING_EXCLUDED];
 
 async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
