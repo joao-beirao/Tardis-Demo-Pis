@@ -41,7 +41,9 @@ function updateLEDs(){
   }
   */
   for (let i = 0; i < 3; i++) {
-      output.setState(i, stateList[i]);
+    output.turnOff(0, i);
+    output.turnOn(1, i);
+    //output.setState(i, stateList[i]);
   }
 }
 
