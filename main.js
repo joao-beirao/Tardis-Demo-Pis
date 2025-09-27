@@ -24,7 +24,7 @@ let ledStates = [
 
 for (let i = 0; i < led.length; i++) {
   for (let j = 0; j < led[i].length; j++) {
-    led[i][j].requestOutputMode();
+    await led[i][j].requestOutputMode();
   }
 }
 
