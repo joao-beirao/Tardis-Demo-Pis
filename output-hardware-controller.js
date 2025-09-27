@@ -1,6 +1,6 @@
 const { Chip, Line } = require('node-libgpiod');
 const EventStates = require('./constants');
-const chip = new Chip(0);
+const chip = new Chip(4);
 
 /*
 *  This code supports 
@@ -26,7 +26,7 @@ for (let i = 0; i < led.length; i++) {
 
 // * Change Led State
 function turnOn(i, j) {
-  if (ledStates[i][j] != 1) {
+  if (ledStates[i][j] !== 1) {
     led[i][j].setValue(1);
     ledStates[i][j] = 1;
   }
@@ -34,7 +34,7 @@ function turnOn(i, j) {
 
 // * Change Led State
 function turnOff(i, j) {
-  if (ledStates[i][j] != 0) {
+  if (ledStates[i][j] !== 0) {
     led[i][j].setValue(0);
     ledStates[i][j] = 0;
   }
