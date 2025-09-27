@@ -50,10 +50,10 @@ function updateLEDs(){
     } else if (stateList[i] === EventStates.STATE_PENDING_INCLUDED) {
       output.turnOn(0, i);
       output.turnOn(1, i);
-    } /*else if (stateList[i] === EventStates.STATE_PENDING_EXCLUDED) {
+    } else if (stateList[i] === EventStates.STATE_PENDING_EXCLUDED) {
       output.turnOn(0, i);
       output.turnOff(1, i);
-    } else {
+    } /*else {
       console.log('Unknown state');
     }*/
   }
