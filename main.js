@@ -10,14 +10,16 @@ async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-for (let i = 0; i < 2; i++) {
-    for (let j = 0; j < 3; j++) {
-        output.turnOn(i, j);
-    }
-}
 
 async function update() {
     await getDCRAvailableEvents("p-1-1").then( (data) => {
+
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 3; j++) {
+                output.turnOn(i, j);
+            }
+        }
+
         console.log(data);
         data.forEach((event, i) => {
             if (event[0] && event[1]) {
@@ -30,7 +32,9 @@ async function update() {
                 stateList[i] = EventStates.STATE_NOT_PENDING_EXCLUDED;
             }
         });
-    }); 
+    }).catch((err) => {
+        console.error('Error:', err);
+    });
 
     for (let i = 0; i < 3; i++) {
       output.setState(i, stateList[i]);
