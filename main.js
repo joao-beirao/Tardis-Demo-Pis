@@ -34,15 +34,15 @@ async function updateStates() {
 }
 
 function updateLEDs(){
-  for (let i = 0; i < 2; i++) {
+  /*for (let i = 0; i < 2; i++) {
     for (let j = 0; j < 3; j++) {
       output.turnOn(i, j);
     }
   }
-  /*
+  */
   for (let i = 0; i < 3; i++) {
       output.setState(i, stateList[i]);
-  }*/
+  }
 }
 
 async function main() {
@@ -56,11 +56,6 @@ async function main() {
 
 main();
 
-process.on('SIGINT', () => {
-    console.log('Caught interrupt signal');
-    output.cleanup();
-    process.exit();
-});
 
 process.on('exit', (code) => {
     console.log(`About to exit with code: ${code}`);
