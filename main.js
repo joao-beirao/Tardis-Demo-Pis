@@ -1,6 +1,6 @@
 const { getDCRAvailableEvents } = require('./API-reader');
 const EventStates = require('./constants');
-//const { setOnButtonPress } = require('./input-hardware-controller');
+const { setOnButtonPress } = require('./input-hardware-controller');
 const { executeConsume } = require('./EventController');
 const output = require('./output-hardware-controller');
 
@@ -18,25 +18,26 @@ async function update() {
 
         data.forEach((event, i) => {
             if (event[0] && event[1]) {
-                stateList[i] = EventStates.STATE_PENDING_INCLUDED;
+              output.turnOff(0, i);
+              output.turnOn(1, i);
             } else if (event[0] && !event[1]) {
-                stateList[i] = EventStates.STATE_NOT_PENDING_INCLUDED;
+                output.turnOff(0, i);
+                output.turnOff(1, i);
             } else if (!event[0] && event[1]) {
-                stateList[i] = EventStates.STATE_PENDING_EXCLUDED;
+                output.turnOn(0, i);
+                output.turnOff(1, i);
             } else {
-                stateList[i] = EventStates.STATE_NOT_PENDING_EXCLUDED;
+                output.turnOff(0, i);
+                output.turnOff(1, i);
             }
         });
 
-        for (let i = 0; i < 3; i++) {
-          output.setState(i, stateList[i]);
-        }
 
     }); 
 }
 
 async function main() {
-    //setOnButtonPress(() => {executeConsume();});
+    setOnButtonPress(() => {executeConsume();});
     while (true) {
         await update();
         await wait(1000);
