@@ -71,7 +71,7 @@ function setState(index, state) {
 
 
 async function update() {
-    getDCRAvailableEvents("p-1-1").then((data) => {
+    await getDCRAvailableEvents("p-1-1").then((data) => {
 
         console.log(data);
 
@@ -88,7 +88,7 @@ async function update() {
         });
 
         for (let i = 0; i < 3; i++) {
-          setState(i, stateList[i]);
+          //setState(i, stateList[i]);
         }
 
     }); 
