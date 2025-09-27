@@ -34,8 +34,9 @@ async function update() {
 
 async function main() {
     setOnButtonPress(() => {executeConsume();});
+    await update();
+
     while (true) {
-        await update();
         await wait(1000);
     }
 }
