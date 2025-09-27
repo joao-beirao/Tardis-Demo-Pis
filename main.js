@@ -11,14 +11,9 @@ async function wait(ms) {
 }
 
 
-async function update() {
+async function updateStates() {
     await getDCRAvailableEvents("p-1-1").then( (data) => {
 
-        for (let i = 0; i < 2; i++) {
-            for (let j = 0; j < 3; j++) {
-                output.turnOn(i, j);
-            }
-        }
 
         console.log(data);
         data.forEach((event, i) => {
@@ -36,15 +31,25 @@ async function update() {
         console.error('Error:', err);
     });
 
-    for (let i = 0; i < 3; i++) {
-      output.setState(i, stateList[i]);
+}
+
+function updateLEDs(){
+  for (let i = 0; i < 2; i++) {
+    for (let j = 0; j < 3; j++) {
+      output.turnOn(i, j);
     }
+  }
+  /*
+  for (let i = 0; i < 3; i++) {
+      output.setState(i, stateList[i]);
+  }*/
 }
 
 async function main() {
     setOnButtonPress(() => {executeConsume();});
     while (true) {
-        await update();
+        updateLEDs();
+        await updateStates();
         await wait(1000);
     }
 }
