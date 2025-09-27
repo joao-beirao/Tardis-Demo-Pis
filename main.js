@@ -34,12 +34,10 @@ async function updateStates() {
 }
 
 function updateLEDs(){
-  /*for (let i = 0; i < 2; i++) {
-    for (let j = 0; j < 3; j++) {
-      output.turnOn(i, j);
-    }
-  }
-  */
+  
+    output.turnOn(0, 0);
+    output.turnOff(1, 0);
+  /*
   for (let i = 0; i < 3; i++) {
     if (stateList[i] === EventStates.STATE_NOT_PENDING_INCLUDED) {
       output.turnOff(0, i);
@@ -55,8 +53,8 @@ function updateLEDs(){
       output.turnOff(1, i);
     } /*else {
       console.log('Unknown state');
-    }*/
-  }
+    }
+  }*/
 }
 
 async function main() {
