@@ -58,15 +58,15 @@ function updateLEDs(){
   }
 }
 
-async function main() {
-    setOnButtonPress(() => {executeConsume();});
+function main() {
     while (true) {
         updateLEDs();
         //await updateStates();
-        await wait(1000);
+        wait(1000);
     }
 }
 
+setOnButtonPress(() => {executeConsume();});
 main();
 
 
