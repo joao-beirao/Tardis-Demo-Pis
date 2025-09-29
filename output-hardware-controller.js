@@ -8,7 +8,7 @@ const chip = new Chip(4);
 *  3 LEDS on pins 5, 6, 13
 */
 let led = [
-  [new Line(chip, 17), new Line(chip, 27), new Line(chip, 26)], //PENDING
+  [new Line(chip, 17), new Line(chip, 27), new Line(chip, 22)], //PENDING
   [new Line(chip, 5), new Line(chip, 6), new Line(chip, 13)],   //INCLUDED
 ];
 
@@ -17,8 +17,8 @@ let ledStates = [
   [0, 0, 0],
 ];
 
-for (let i = 0; i < led.length; i++) {
-  for (let j = 0; j < led[i].length; j++) {
+for (let i = 0; i < 2; i++) {
+  for (let j = 0; j < 3; j++) {
     led[i][j].requestOutputMode();
   }
 }
