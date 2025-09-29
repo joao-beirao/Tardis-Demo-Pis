@@ -41,17 +41,17 @@ function updateLEDs(){
   for (let i = 0; i < 3; i++) {
     console.log(`State of ${i}: ${stateList[i]}`);
     if (stateList[i] === EventStates.STATE_NOT_PENDING_INCLUDED) {
-      output.turnOff(0, i);
-      output.turnOn(1, i);
+      output.led[0][i].setValue(0);
+      output.led[1][i].setValue(1);
     } else if (stateList[i] === EventStates.STATE_NOT_PENDING_EXCLUDED) {
-      output.turnOff(0, i);
-      output.turnOff(1, i);
+      output.led[0][i].setValue(0);
+      output.led[1][i].setValue(0);
     } else if (stateList[i] === EventStates.STATE_PENDING_INCLUDED) {
-      output.turnOn(0, i);
-      output.turnOn(1, i);
+      output.led[0][i].setValue(1);
+      output.led[1][i].setValue(1);
     } else if (stateList[i] === EventStates.STATE_PENDING_EXCLUDED) {
-      output.turnOn(0, i);
-      output.turnOff(1, i);
+      output.led[0][i].setValue(1);
+      output.led[1][i].setValue(0);
     } else {
       console.log('Unknown state');
     }

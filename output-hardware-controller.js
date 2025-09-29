@@ -83,4 +83,4 @@ function cleanup() {
 }
 
 
-module.exports = { cleanup, setState, turnOff, turnOn };
+module.exports = { led, cleanup, setState, turnOff, turnOn };
