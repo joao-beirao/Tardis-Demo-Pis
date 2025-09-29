@@ -13,6 +13,7 @@ async function main(){
     if (i === 0) {
       j = (j + 1) % 3;
     }
+    console.log(`Turning on LED at (${i}, ${j})`);
     await controller.turnOn(i, j);
     await wait(1000);
   }
