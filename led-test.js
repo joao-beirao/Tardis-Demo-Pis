@@ -9,7 +9,7 @@ async function main(){
   let i = 0;
   let j = 0;
   while (true) {
-    turnOff();
+    await turnOff();
     controller.turnOn(i, j);
     i = (i + 1) % 2;
     if (i === 0) {
