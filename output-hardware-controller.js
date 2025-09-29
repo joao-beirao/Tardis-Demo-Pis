@@ -27,7 +27,11 @@ for (let i = 0; i < led.length; i++) {
 // * Change Led State
 function turnOn(i, j) {
   if (ledStates[i][j] !== 1) {
+    try{
     led[i][j].setValue(1);
+    }catch(err){
+      console.log("Error turning on LED:", err);
+    }
     ledStates[i][j] = 1;
   }
 }
@@ -35,7 +39,11 @@ function turnOn(i, j) {
 // * Change Led State
 function turnOff(i, j) {
   if (ledStates[i][j] !== 0) {
+    try{
     led[i][j].setValue(0);
+    }catch(err){
+      console.log("Error turning off LED:", err);
+    }
     ledStates[i][j] = 0;
   }
 }
