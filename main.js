@@ -35,9 +35,6 @@ async function updateStates() {
 
 function updateLEDs(){
   
-    output.turnOn(0, 0);
-    output.turnOff(1, 0);
-  
   for (let i = 0; i < 3; i++) {
     console.log(`State of ${i}: ${stateList[i]}`);
     if (stateList[i] === EventStates.STATE_NOT_PENDING_INCLUDED) {
@@ -62,7 +59,7 @@ function main() {
     while (true) {
         updateLEDs();
         //await updateStates();
-        wait(1000);
+        //wait(1000);
     }
 }
 
