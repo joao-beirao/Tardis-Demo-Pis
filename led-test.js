@@ -9,9 +9,9 @@ async function main(){
   let j = 0;
   while (true) {
     console.log(`Turning on LED at (${i}, ${j})`);
-    await controller.turnOn(i, j);
+    await controller.turnOn(0, 0);
     await wait(1000);
-    await controller.turnOff(i, j);
+    await controller.turnOff(0, 0);
 
     j = (j + 1) % 3;
     if (j === 0) {
