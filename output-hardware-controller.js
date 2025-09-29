@@ -1,6 +1,6 @@
 const { Chip, Line } = require('node-libgpiod');
 const EventStates = require('./constants');
-const chip = new Chip(5);
+const chip = new Chip(4);
 
 /*
 *  This code supports 
@@ -8,7 +8,7 @@ const chip = new Chip(5);
 *  3 LEDS on pins 5, 6, 13
 */
 let led = [
-  [new Line(chip, 17), new Line(chip, 27), new Line(chip, 22)], //PENDING
+  [new Line(chip, 17), new Line(chip, 27), new Line(chip, 26)], //PENDING
   [new Line(chip, 5), new Line(chip, 6), new Line(chip, 13)],   //INCLUDED
 ];
 
