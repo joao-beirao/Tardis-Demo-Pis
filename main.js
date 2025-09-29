@@ -55,16 +55,16 @@ function updateLEDs(){
   }
 }
 
-function main() {
+async function main() {
     while (true) {
         updateLEDs();
         //await updateStates();
-        wait(1000);
+        await wait(1000);
     }
 }
 
 setOnButtonPress(() => {executeConsume();});
-main();
+await main();
 
 
 process.on('exit', (code) => {
