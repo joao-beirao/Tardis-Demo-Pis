@@ -59,7 +59,7 @@ function main() {
     while (true) {
         updateLEDs();
         //await updateStates();
-        //wait(1000);
+        wait(1000);
     }
 }
 
