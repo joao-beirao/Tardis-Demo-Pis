@@ -11,7 +11,7 @@ async function main(){
     controller.turnOff(i, j);
     i = (i + 1) % 2;
     if (i === 0) {
-      j = (j + 1) % 2;
+      j = (j + 1) % 3;
     }
     controller.turnOn(i, j);
     await wait(1000);
