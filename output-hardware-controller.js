@@ -17,18 +17,15 @@ let ledStates = [
   [0, 0, 0],
 ];
 
-for (let i = 0; i < led.length; i++) {
-  for (let j = 0; j < led[i].length; j++) {
-    led[i][j].requestOutputMode();
-  }
-}
 
 
 // * Change Led State
 function turnOn(i, j) {
   if (ledStates[i][j] !== 1) {
     try{
+    led[i][j].requestOutputMode();
     led[i][j].setValue(1);
+    led[i][j].release();
     }catch(err){
       console.log("Error turning on LED:", err);
     }
@@ -40,7 +37,9 @@ function turnOn(i, j) {
 function turnOff(i, j) {
   if (ledStates[i][j] !== 0) {
     try{
+    led[i][j].requestOutputMode();
     led[i][j].setValue(0);
+    led[i][j].release();
     }catch(err){
       console.log("Error turning off LED:", err);
     }
