@@ -1,5 +1,4 @@
 const controller = require('./output-hardware-controller');
-const turnOff = require('./turn-off-all');
 
 async function wait(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
