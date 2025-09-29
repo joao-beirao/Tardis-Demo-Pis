@@ -1,4 +1,4 @@
-const buttons = require('./intput-hardware-controller');
+const buttons = require('./input-hardware-controller');
 const turnOn = require('./turn-on-all');
 const turnOff = require('./turn-off-all');
 
