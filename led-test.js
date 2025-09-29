@@ -21,3 +21,8 @@ async function main(){
 
 main();
 
+process.on('SIGINT', () => {
+  controller.cleanup();
+  console.log("Clean exit.");
+  process.exit();
+});
