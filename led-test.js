@@ -13,9 +13,9 @@ async function main(){
     await wait(1000);
     await controller.turnOff(i, j);
 
-    i = (i + 1) % 2;
-    if (i === 0) {
-      j = (j + 1) % 3;
+    j = (j + 1) % 3;
+    if (j === 0) {
+      i = (i + 1) % 2;
     }
 
   }
