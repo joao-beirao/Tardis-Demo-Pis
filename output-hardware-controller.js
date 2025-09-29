@@ -1,6 +1,6 @@
 const { Chip, Line } = require('node-libgpiod');
 const EventStates = require('./constants');
-const chip = new Chip(0);
+const chip = new Chip(5);
 
 /*
 *  This code supports 
