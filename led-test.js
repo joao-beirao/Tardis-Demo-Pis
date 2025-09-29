@@ -8,12 +8,12 @@ async function main(){
   let i = 0;
   let j = 0;
   while (true) {
-    controller.turnOff(i, j);
+    await controller.turnOff(i, j);
     i = (i + 1) % 2;
     if (i === 0) {
       j = (j + 1) % 3;
     }
-    controller.turnOn(i, j);
+    await controller.turnOn(i, j);
     await wait(1000);
   }
 }
