@@ -1,5 +1,4 @@
 import aiohttp
-import asyncio
 
 async def executeEvent(URL, BODY):
     async with aiohttp.ClientSession() as session:
