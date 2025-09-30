@@ -125,7 +125,7 @@ async def main():
         asyncio.run(listen_websocket(uri))
 
     monitor = button_control.ButtonMonitor()
-    monitor.set_on_button_press(lambda: asyncio.create_task(execute_consume()))
+    monitor.set_on_button_press(lambda: asyncio.run(execute_consume()))
     
     thread = threading.Thread(target=run_websocket)
     while True:
