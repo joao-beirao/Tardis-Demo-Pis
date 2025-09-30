@@ -33,9 +33,9 @@ def event_update_callback(Json):
         for i in range(led_matrix.__len__()):
             for j in range(led_matrix[i].__len__()):
                 if led_matrix[i][j] == 1:
-                    controller.turn_on(i, j)
+                    controller.turn_on(j, i)
                 else:
-                    controller.turn_off(i, j)
+                    controller.turn_off(j, i)
         print(f"LED Matrix updated: {led_matrix}")
     except Exception as e:
         print(f"Error parsing JSON or counting events: {e}")
