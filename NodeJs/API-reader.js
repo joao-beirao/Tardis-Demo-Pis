@@ -2,6 +2,8 @@ const { get } = require('http');
 
 const BASE_URL = (device) => `http://${device}:8080/rest/dcr/events/enable`;
 
+
+
 // * Reads URL and returns JSON response
 function getApiData(url) {
     return new Promise((resolve, reject) => {
