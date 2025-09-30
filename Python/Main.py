@@ -6,7 +6,7 @@ import sys
 import aiohttp
 import threading
 import LedControll as controller
-
+import ButtonControll as button_control
 async def trigger_response():
     URL = "http://localhost:8080/rest/dcr/events/enable"  # Replace with your desired URL
 
@@ -14,6 +14,26 @@ async def trigger_response():
         async with session.get(URL) as response:
             data = await response.text()
             print("Triggered response")
+
+async def execute_consume():
+    URL = "http://p-1-1:8080/rest/dcr/events/input/_csm_2/"  # Replace with your desired URL
+    payload = {
+        "eventID": "_csm_2",
+        "value": {
+            "type": "Record",
+            "value": {
+                "kw": {
+                    "type": "Number",
+                    "value": 123
+                }
+            }
+        }
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.put(URL, json=payload) as response:
+            resp_data = await response.text()
+            print(f"PUT request sent. Response: {resp_data}")
 
 def event_update_callback(Json):
 
@@ -78,6 +98,9 @@ async def main():
     def run_websocket():
         asyncio.run(listen_websocket(uri))
 
+    monitor = button_control.ButtonMonitor()
+    monitor.set_on_button_press(execute_consume)
+    
     thread = threading.Thread(target=run_websocket)
     while True:
         thread.start()
@@ -100,3 +123,7 @@ if __name__ == "__main__":
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\nExiting...")
+    finally:
+        controller.cleanup()
+        button_control.cleanup()
+        sys.exit(0)
