@@ -30,12 +30,11 @@ def event_update_callback(Json):
             if marking.get("isPending") is True:
                 pending = 1
             led_matrix.append([included, pending])
+        controller.turn_off_all()
         for i in range(led_matrix.__len__()):
             for j in range(led_matrix[i].__len__()):
                 if led_matrix[i][j] == 1:
                     controller.turn_on(j, i)
-                else:
-                    controller.turn_off(j, i)
         print(f"LED Matrix updated: {led_matrix}")
     except Exception as e:
         print(f"Error parsing JSON or counting events: {e}")

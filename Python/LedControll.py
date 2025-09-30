@@ -49,6 +49,15 @@ def turn_off(i, j):
         except Exception as err:
             print(f"Error turning off LED: {err}")
 
+def turn_off_all():
+    for i in range(led.__len__()):
+        for j in range(led[i].__len__()):
+            turn_off(i, j)
+
+def turn_on_all():
+    for i in range(led.__len__()):
+        for j in range(led[i].__len__()):
+            turn_on(i, j)
 
 def cleanup(signum=None, frame=None):
     print("Cleaning up GPIO...")
