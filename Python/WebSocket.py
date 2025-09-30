@@ -36,6 +36,7 @@ def event_update_callback(Json):
                     controller.turn_on(i, j)
                 else:
                     controller.turn_off(i, j)
+        print(f"LED Matrix updated: {led_matrix}")
     except Exception as e:
         print(f"Error parsing JSON or counting events: {e}")
 
