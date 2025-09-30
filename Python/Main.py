@@ -7,6 +7,7 @@ import aiohttp
 import threading
 import LedControll as controller
 import ButtonControll as button_control
+from EventExecution import executeConsume
 
 
 
@@ -17,48 +18,6 @@ async def trigger_response():
         async with session.get(URL) as response:
             data = await response.text()
             print("Triggered response")
-
-async def execute_consume():
-    URL = "http://p-1-1:8080/rest/dcr/events/input/_csm_2/"  # Replace with your desired URL
-    payload = {
-        "eventID": "_csm_2",
-        "value": {
-            "type": "Record",
-            "value": {
-                "kw": {
-                    "type": "Number",
-                    "value": 123
-                }
-            }
-        }
-    }
-
-    async with aiohttp.ClientSession() as session:
-        async with session.put(URL, json=payload) as response:
-            resp_data = await response.text()
-            print(f"PUT request sent. Response: {resp_data}")
-
-async def execute_consume():
-    URL = "http://p-1-1:8080/rest/dcr/events/input/_csm_2/"  # Replace with your desired URL
-    payload = {
-        "eventID": "_csm_2",
-        "value": {
-            "type": "Record",
-            "value": {
-                "kw": {
-                    "type": "Number",
-                    "value": 123
-                }
-            }
-        }
-    }
-
-    async with aiohttp.ClientSession() as session:
-        async with session.put(URL, json=payload) as response:
-            resp_data = await response.text()
-            print(f"PUT request sent. Response: {resp_data}")
-
-
 
 
 def event_update_callback(Json):
@@ -125,7 +84,7 @@ async def main():
         asyncio.run(listen_websocket(uri))
 
     monitor = button_control.ButtonMonitor()
-    monitor.set_on_button_press(lambda: asyncio.run(execute_consume()))
+    monitor.set_on_button_press(lambda: asyncio.run(executeConsume("_csm_2")))
     
     thread = threading.Thread(target=run_websocket)
     while True:
