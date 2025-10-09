@@ -11,9 +11,9 @@ from EventExecution import executeConsume
 
 # Events tracked
 CONSUME = "consume"
-REPLY_FORECAST = ""
-ACCEPT = ""
-REPLY_CONSUME = ""
+REPLY_FORECAST = "r4c_replyForecast"
+ACCEPT = "accept"
+REPLY_CONSUME = "csm_reply"
 
 
 async def trigger_response():
