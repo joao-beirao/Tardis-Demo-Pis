@@ -10,7 +10,7 @@ import ButtonControll as button_control
 from EventExecution import executeConsume
 
 # Events tracked
-CONSUME = ""
+CONSUME = "consume"
 REPLY_FORECAST = ""
 ACCEPT = ""
 REPLY_CONSUME = ""
@@ -36,13 +36,13 @@ def event_update_callback(Json):
         reply_consume = False
 
         for event in events:
-            if (event.get("label") == "_csm_2" and event.get("marking", {}).get("isIncluded")):
+            if (event.get("label") == CONSUME and event.get("marking", {}).get("isIncluded")):
                 consume = True
-            if (event.get("label") == "_rfc_2" and event.get("marking", {}).get("isIncluded")):
+            if (event.get("label") == REPLY_FORECAST and event.get("marking", {}).get("isIncluded")):
                 reply_forecast = True
-            if (event.get("label") == "_acc_2" and event.get("marking", {}).get("isIncluded")):
+            if (event.get("label") == ACCEPT and event.get("marking", {}).get("isIncluded")):
                 accept = True
-            if (event.get("label") == "_rcm_2" and event.get("marking", {}).get("isIncluded")):
+            if (event.get("label") == REPLY_CONSUME and event.get("marking", {}).get("isIncluded")):
                 reply_consume = True
         controller.turn_off_all()
         if consume:
