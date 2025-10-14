@@ -28,7 +28,7 @@ async def executeConsume(Json):
 
 #TODO
 async def executeAccept(id):
-    payload = ???
+    payload = {}
     await executeEvent(URL(id), payload)
 
 
