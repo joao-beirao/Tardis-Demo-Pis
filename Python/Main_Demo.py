@@ -15,6 +15,9 @@ REPLY_FORECAST = "r4c_replyForecast"
 ACCEPT = "accept"
 REPLY_CONSUME = "csm_reply"
 
+BUTTON_PINS = [21]
+
+updated_json = ""
 
 async def trigger_response():
     URL = "http://localhost:8080/rest/dcr/events/enable"  # Replace with your desired URL
@@ -28,6 +31,7 @@ async def trigger_response():
 def event_update_callback(Json):
     try:
         data = json.loads(Json)
+        updated_json = data
         print(f"Received JSON: {data}")
         events = data.get("events", [])
         consume = False
@@ -92,13 +96,16 @@ async def listen_websocket(uri):
         print(f"Error: {e}")
 
 
+########################       MAIN      ##########################
+
+
 async def main():
     uri = "ws://localhost:8080/dcr" 
 
     def run_websocket():
         asyncio.run(listen_websocket(uri))
 
-    monitor = button_control.ButtonMonitor()
+    monitor = button_control.ButtonMonitor(BUTTON_PINS[0])
     monitor.set_on_button_press(lambda: asyncio.run(executeConsume("_csm_2")))
     
     thread = threading.Thread(target=run_websocket)
