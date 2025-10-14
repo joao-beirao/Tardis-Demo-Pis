@@ -5,7 +5,7 @@ from typing import Callable, Optional
 
 # Chip and line configuration
 CHIP_NUMBER = 0
-
+BUTTON_PIN = 21
 class ButtonMonitor:
     def __init__(self, chip_number: int = CHIP_NUMBER, button_pin: int = BUTTON_PIN):
         self.chip_number = chip_number
