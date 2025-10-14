@@ -16,6 +16,7 @@ ACCEPT = "accept"
 REPLY_CONSUME = "csm_reply"
 
 BUTTON_PINS = [21]
+CHIP_NUMBER = 0
 
 updated_json = ""
 
@@ -105,7 +106,7 @@ async def main():
     def run_websocket():
         asyncio.run(listen_websocket(uri))
 
-    monitor = button_control.ButtonMonitor(BUTTON_PINS[0])
+    monitor = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
     monitor.set_on_button_press(lambda: asyncio.run(executeConsume("_csm_2")))
     
     thread = threading.Thread(target=run_websocket)
