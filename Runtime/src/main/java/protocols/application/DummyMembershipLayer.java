@@ -49,13 +49,14 @@ public final class DummyMembershipLayer
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("2")),
                         Record.Field.of("cid", IntVal.of(1)))), "p-2-1"));
-        singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
+        /*singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("3")),
                         Record.Field.of("cid", IntVal.of(1)))), "p-3-1"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("4")),
                         Record.Field.of("cid", IntVal.of(1)))), "p-4-1"));
-        // EC 2
+        */
+                        // EC 2
         singleton.onNeighborUp(new DummyNeighbour(
                 UserVal.of("CO", Record.ofEntries(Record.Field.of("cid", IntVal.of(2)))), "co-2"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
