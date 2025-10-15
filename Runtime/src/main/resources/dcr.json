@@ -1,0 +1,158 @@
+{
+  "role": {
+    "label": "P",
+    "params": [
+      { "name": "cid", "type": { "valueType": "int" } },
+      { "name": "pid", "type": { "valueType": "int" } }
+    ]
+  },
+  "graph": {
+    "events": [
+      {
+        "inputEvent": {
+          "common": {
+            "uid": "e0_0_Tx",
+            "id": "e0_0_Tx",
+            "label": "E0",
+            "dataType": { "valueType": "void" },
+            "marking": { "isPending": false, "isIncluded": true }
+          },
+          "receivers": [
+            {
+              "roleExpr": {
+                "roleLabel": "P",
+                "params": [
+                  {
+                    "name": "cid",
+                    "value": {
+                      "propDeref": {
+                        "propBasedExpr": {
+                          "propDeref": {
+                            "propBasedExpr": {
+                              "eventRef": { "value": "_@self" }
+                            },
+                            "prop": "params"
+                          }
+                        },
+                        "prop": "cid"
+                      }
+                    }
+                  },
+                  { "name": "pid" }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      {
+        "receiveEvent": {
+          "common": {
+            "uid": "e0_0_Rx",
+            "id": "e0_0_Rx",
+            "label": "E0",
+            "dataType": { "valueType": "void" },
+            "marking": { "isPending": false, "isIncluded": true }
+          },
+          "initiators": [
+            {
+              "roleExpr": {
+                "roleLabel": "P",
+                "params": [
+                  {
+                    "name": "cid",
+                    "value": {
+                      "propDeref": {
+                        "propBasedExpr": {
+                          "propDeref": {
+                            "propBasedExpr": {
+                              "eventRef": { "value": "_@self" }
+                            },
+                            "prop": "params"
+                          }
+                        },
+                        "prop": "cid"
+                      }
+                    }
+                  },
+                  { "name": "pid" }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "relations": [
+      {
+        "spawnRelation": {
+          "common": { "uid": "1", "sourceId": "e0_0_Rx" },
+          "triggerId": "_@trigger$e0",
+          "graph": {
+            "events": [
+              {
+                "inputEvent": {
+                  "common": {
+                    "uid": "e1_1_TxO",
+                    "id": "e1_1_TxO",
+                    "label": "E1",
+                    "dataType": { "valueType": "void" },
+                    "marking": { "isPending": false, "isIncluded": true }
+                  },
+                  "receivers": [ { "initiatorExpr": { "eventId": "e0" } } ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      {
+        "spawnRelation": {
+          "common": { "uid": "1", "sourceId": "e0_0_Tx" },
+          "triggerId": "_@trigger$e0",
+          "graph": {
+            "events": [
+              {
+                "receiveEvent": {
+                  "common": {
+                    "uid": "e1_1_RxO",
+                    "id": "e1_1_RxO",
+                    "label": "E1",
+                    "dataType": { "valueType": "void" },
+                    "marking": { "isPending": false, "isIncluded": true }
+                  },
+                  "initiators": [
+                    {
+                      "roleExpr": {
+                        "roleLabel": "P",
+                        "params": [
+                          {
+                            "name": "cid",
+                            "value": {
+                              "propDeref": {
+                                "propBasedExpr": {
+                                  "propDeref": {
+                                    "propBasedExpr": {
+                                      "eventRef": { "value": "_@trigger$e0" }
+                                    },
+                                    "prop": "initiator"
+                                  }
+                                },
+                                "prop": "cid"
+                              }
+                            }
+                          },
+                          { "name": "pid" }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

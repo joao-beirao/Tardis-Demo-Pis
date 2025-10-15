@@ -1,0 +1,810 @@
+{
+  "required": ["role", "graph"],
+  "role": {
+    "$ref": "#/$defs/roleDecl"
+  },
+  "graph": {
+    "$ref": "#/$defs/graph"
+  },
+
+  "$defs": {
+    "nonEmptyString": {
+      "$ref": "#/$defs/nonEmptyString"
+    },
+    "value": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "boolLit": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "bool"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "boolLit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "intLit": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "int"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "intLit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "stringLit": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "stringLit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "recordVal": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object,",
+                    "properties": {
+                      "name": {
+                        "$ref": "#/$defs/nonEmptyString"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/value"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  }
+                }
+              },
+              "required": [
+                "fields"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "recordVal"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "type": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "valueType": {
+              "enum": [
+                "bool",
+                "int",
+                "string",
+                "void"
+              ]
+            }
+          },
+          "required": [
+            "valueType"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "recordType": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "$ref": "#/$defs/nonEmptyString"
+                      },
+                      "type": {
+                        "$ref": "#/$defs/type"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "type"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "fields"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "recordType"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "eventType": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "eventType"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "marking": {
+      "type": "object",
+      "properties": {
+        "isIncluded": {
+          "type": "boolean"
+        },
+        "isPending": {
+          "type": "boolean"
+        },
+        "defaultValue": {
+          "$ref": "#/$defs/value"
+        }
+      },
+      "required": [
+        "isIncluded",
+        "isPending"
+      ],
+      "additionalProperties": false
+    },
+    "computationExpression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "boolLit": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "boolLit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "intLit": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "intLit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "stringLit": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "stringLit"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "eventRef": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "eventRef"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "record": {
+              "type": "object",
+              "properties": {
+                "fields": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "$ref": "#/$defs/nonEmptyString"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/computationExpression"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "value"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "fields"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "record"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "propDeref": {
+              "type": "object",
+              "properties": {
+                "propBasedExpr": {
+                  "$ref": "#/$defs/computationExpression"
+                },
+                "prop": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "propBasedExpr",
+                "prop"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "propDeref"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "binaryOp": {
+              "type": "object",
+              "properties": {
+                "expr1": {
+                  "$ref": "#/$defs/computationExpression"
+                },
+                "expr2": {
+                  "$ref": "#/$defs/computationExpression"
+                },
+                "op": {
+                  "enum": [
+                    "and",
+                    "or",
+                    "equals",
+                    "notEquals",
+                    "intAdd",
+                    "stringConcat",
+                    "intLessThan",
+                    "intGreaterThan",
+                    "intLessThanOrEqual",
+                    "intGreaterThanOrEqual"
+                  ]
+                }
+              },
+              "required": [
+                "expr1",
+                "expr2",
+                "op"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "binaryOp"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "additionalProperties": false
+    },
+    "userSetExpression": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "roleExpr": {
+              "type": "object",
+              "properties": {
+                "roleLabel": {
+                  "$ref": "#/$defs/nonEmptyString"
+                },
+                "params": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "$ref": "#/$defs/nonEmptyString"
+                      },
+                      "value": {
+                        "$ref": "#/$defs/computationExpression"
+                      }
+                    },
+                    "required": [
+                      "name"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "roleLabel"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "roleExpr"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "initiatorExpr": {
+              "type": "object",
+              "properties": {
+                "eventId": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "eventId"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "initiatorExpr"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "receiverExpr": {
+              "type": "object",
+              "properties": {
+                "eventId": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              },
+              "required": [
+                "eventId"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "receiverExpr"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "dataExpr": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "computationExpression": {
+              "$ref": "#/$defs/computationExpression"
+            }
+          },
+          "required": [
+            "computationExpression"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "$ref": "#/$defs/type"
+            }
+          },
+          "required": [
+            "typeExpression"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "event": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "computationEvent": {
+              "type": "object",
+              "properties": {
+                "common": {
+                  "$ref": "#/$defs/eventCommon"
+                },
+                "dataExpr": {
+                  "$ref": "#/$defs/computationExpression"
+                },
+                "receivers": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/userSetExpression"
+                  }
+                }
+              },
+              "required": [
+                "common"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "computationEvent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "inputEvent": {
+              "type": "object",
+              "properties": {
+                "common": {
+                  "$ref": "#/$defs/eventCommon"
+                },
+                "receivers": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/userSetExpression"
+                  }
+                }
+              },
+              "required": [
+                "common"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "inputEvent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "receiveEvent": {
+              "type": "object",
+              "properties": {
+                "common": {
+                  "$ref": "#/$defs/eventCommon"
+                },
+                "initiators": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "$ref": "#/$defs/userSetExpression"
+                  }
+                }
+              },
+              "required": [
+                "common",
+                "initiators"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "receiveEvent"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "eventCommon": {
+      "type": "object",
+      "properties": {
+        "choreoElementUID": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "endpointElementUID": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "label": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "dataType": {
+          "$ref": "#/$defs/type"
+        },
+        "marking": {
+          "$ref": "#/$defs/marking"
+        },
+        "instantiationConstraint": {
+          "$ref": "#/$defs/computationExpression"
+        },
+        "ifcConstraint": {
+          "$ref": "#/$defs/computationExpression"
+        }
+      },
+      "required": [
+        "endpointElementUID",
+        "choreoElementUID",
+        "id",
+        "label",
+        "dataType",
+        "marking"
+      ],
+      "additionalProperties": false
+    },
+    "relation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "controlFlowRelation"
+          ],
+          "properties": {
+            "controlFlowRelation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "relationCommon",
+                "targetId",
+                "relationType"
+              ],
+              "properties": {
+                "relationCommon": {
+                  "$ref": "#/$defs/relationCommon"
+                },
+                "targetId": {
+                  "$ref": "#/$defs/nonEmptyString"
+                },
+                "relationType": {
+                  "enum": [
+                    "include",
+                    "exclude",
+                    "response",
+                    "condition",
+                    "milestone"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "spawnRelation"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "spawnRelation": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "common",
+                "triggerId",
+                "graph"
+              ],
+              "properties": {
+                "common": {
+                  "$ref": "#/$defs/relationCommon"
+                },
+                "graph": {
+                  "$ref": "#/$defs/graph"
+                },
+                "triggerId": {
+                  "$ref": "#/$defs/nonEmptyString"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "relationCommon": {
+      "type": "object",
+      "required": [
+        "uid",
+        "sourceId"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "uid": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sourceId": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "guard": {
+          "$ref": "#/$defs/computationExpression"
+        },
+        "instantiationConstraint": {
+          "$ref": "#/$defs/computationExpression"
+        }
+      }
+    },
+    "eventList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "relationList": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/relation"
+      }
+    },
+    "roleDecl": {
+      "type": "object",
+      "required": ["label"],
+      "properties": {
+        "label": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "params": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "type"],
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/nonEmptyString"
+              },
+              "type": {
+                "$ref": "#/$defs/type"
+              }
+            }
+          }
+        }
+      }
+    },
+    "graph": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "$ref": "#/$defs/eventList"
+        },
+        "relations": {
+          "$ref": "#/$defs/relationList"
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "required": ["role", "graph"],
+      "additionalProperties": false,
+      "properties": {
+        "role": {
+        },
+        "graph": {
+          "$ref": "#/$defs/graph"
+        }
+      }
+    }
+  }
+}
