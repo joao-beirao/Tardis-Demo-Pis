@@ -126,7 +126,7 @@ public class DistributedDCRProtocol
      */
     private void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage> event, int channel) {
         logger.debug(event);
-        System.exit(1);
+        //System.exit(1);
     }
 
     /**

@@ -18,7 +18,10 @@ REPLY_CONSUME = "csm_reply"
 BUTTON_PINS = [21]
 CHIP_NUMBER = 0
 
-updated_json = ""
+last_consume_id = ""
+last_reply_id = ""
+last_accept_id = ""
+last_reply_consume_id = ""
 
 async def trigger_response():
     URL = "http://localhost:8080/rest/dcr/events/enable"  # Replace with your desired URL
@@ -43,12 +46,27 @@ def event_update_callback(Json):
         for event in events:
             if (event.get("label") == CONSUME and event.get("marking", {}).get("isIncluded")):
                 consume = True
+                last_consume_id = searchIDByLabel(CONSUME, data)
+            else:
+                last_consume_id = ""
+
             if (event.get("label") == REPLY_FORECAST and event.get("marking", {}).get("isIncluded")):
                 reply_forecast = True
+                last_reply_id = searchIDByLabel(REPLY_FORECAST, data)
+            else:
+                last_reply_id = ""
+
             if (event.get("label") == ACCEPT and event.get("marking", {}).get("isIncluded")):
                 accept = True
+                last_accept_id = searchIDByLabel(ACCEPT, data)
+            else:
+                last_accept_id = ""
             if (event.get("label") == REPLY_CONSUME and event.get("marking", {}).get("isIncluded")):
                 reply_consume = True
+                last_reply_consume_id = searchIDByLabel(REPLY_CONSUME, data)
+            else:
+                last_reply_consume_id = ""
+
         controller.turn_off_all()
         if consume:
             controller.turn_on(0)
@@ -96,6 +114,18 @@ async def listen_websocket(uri):
     except Exception as e:
         print(f"Error: {e}")
 
+def searchIDByLabel(label, Json):
+    try:
+        data = json.loads(Json)
+        events = data.get("events", [])
+        for event in events:
+            if event.get("label") == label:
+                return event.get("id")
+        print(f"Event with label '{label}' not found.")
+        return None
+    except Exception as e:
+        print(f"Error parsing JSON or searching for label: {e}")
+        return None
 
 ########################       MAIN      ##########################
 
@@ -107,7 +137,7 @@ async def main():
         asyncio.run(listen_websocket(uri))
 
     monitor = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-    monitor.set_on_button_press(lambda: asyncio.run(executeConsume("_csm_2")))
+    monitor.set_on_button_press(lambda: asyncio.run(executeConsume(last_consume_id)))
     
     thread = threading.Thread(target=run_websocket)
     while True:

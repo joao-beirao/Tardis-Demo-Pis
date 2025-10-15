@@ -10,8 +10,7 @@ async def executeEvent(URL, BODY):
             resp_data = await response.text()
             print(f"PUT request sent. Response: {resp_data}")
 
-async def executeConsume(Json):
-    id = "_csm_2" #searchIDByLabel("consume", Json)
+async def executeConsume(id):
     payload = {
         "eventID": f"{id}",
         "value": {
