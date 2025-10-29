@@ -42,13 +42,13 @@ public final class DummyMembershipLayer
         // USE CASE EDP V3 - (id, cid) parameters (multiple communities)
         // EC 1
         singleton.onNeighborUp(new DummyNeighbour(
-                UserVal.of("CO", Record.ofEntries(Record.Field.of("cid", IntVal.of(1)))), "co-1"));
+                UserVal.of("CO", Record.ofEntries(Record.Field.of("cid", IntVal.of(1)))), "co-1.local"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("1")),
-                        Record.Field.of("cid", IntVal.of(1)))), "p-1-1"));
+                        Record.Field.of("cid", IntVal.of(1)))), "p-1-1.local"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("2")),
-                        Record.Field.of("cid", IntVal.of(1)))), "p-2-1"));
+                        Record.Field.of("cid", IntVal.of(1)))), "p-2-1.local"));
         /*singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("3")),
                         Record.Field.of("cid", IntVal.of(1)))), "p-3-1"));
@@ -58,19 +58,20 @@ public final class DummyMembershipLayer
         */
                         // EC 2
         singleton.onNeighborUp(new DummyNeighbour(
-                UserVal.of("CO", Record.ofEntries(Record.Field.of("cid", IntVal.of(2)))), "co-2"));
+                UserVal.of("CO", Record.ofEntries(Record.Field.of("cid", IntVal.of(2)))), "co-2.local"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("1")),
-                        Record.Field.of("cid", IntVal.of(2)))), "p-1-2"));
+                        Record.Field.of("cid", IntVal.of(2)))), "p-1-2.local"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("2")),
-                        Record.Field.of("cid", IntVal.of(2)))), "p-2-2"));
-        singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
+                        Record.Field.of("cid", IntVal.of(2)))), "p-2-2.local"));
+        /*singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("3")),
                         Record.Field.of("cid", IntVal.of(2)))), "p-3-2"));
         singleton.onNeighborUp(new DummyNeighbour(UserVal.of("P",
                 Record.ofEntries(Record.Field.of("id", StringVal.of("4")),
                         Record.Field.of("cid", IntVal.of(2)))), "p-4-2"));
+                        */
     }
 
     private final Map<UserVal, Neighbour> neighbourMapping;

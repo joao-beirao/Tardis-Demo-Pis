@@ -7,9 +7,9 @@ import aiohttp
 import threading
 import LedControll_Demo as controller
 import ButtonControll as button_control
-from EventExecution import executeConsume
+from EventExecution import executeConsume, executeReply, executeReplyConsume, executeAccept
 
-BUTTON_PINS = [21]
+BUTTON_PINS = [24, 17, 27, 22]
 CHIP_NUMBER = 0
 # Events tracked
 CONSUME = "consume"
@@ -55,30 +55,35 @@ class MainApp:
             accept = False
             reply_consume = False
 
+            self.last_consume_id = ""
+            self.last_reply_id = ""
+            self.last_accept_id = ""
+            self.last_reply_consume_id = "" 
+
             for event in events:
-                if (event.get("label") == self.CONSUME and event.get("marking", {}).get("isIncluded")):
+                if (event.get("label") == CONSUME and event.get("marking", {}).get("isIncluded")):
                     consume = True
-                    self.last_consume_id = self.searchIDByLabel(self.CONSUME, data)
-                else:
-                    self.last_consume_id = ""
+                    self.last_consume_id =  event.get("id")
 
-                if (event.get("label") == self.REPLY_FORECAST and event.get("marking", {}).get("isIncluded")):
+
+                if (event.get("label") == REPLY_FORECAST and event.get("marking", {}).get("isIncluded")):
                     reply_forecast = True
-                    self.last_reply_id = self.searchIDByLabel(self.REPLY_FORECAST, data)
-                else:
-                    self.last_reply_id = ""
+                    self.last_reply_id = event.get("id")
 
-                if (event.get("label") == self.ACCEPT and event.get("marking", {}).get("isIncluded")):
+
+                if (event.get("label") == ACCEPT and event.get("marking", {}).get("isIncluded")):
                     accept = True
-                    self.last_accept_id = self.searchIDByLabel(self.ACCEPT, data)
-                else:
-                    self.last_accept_id = ""
+                    self.last_accept_id = event.get("id")
 
-                if (event.get("label") == self.REPLY_CONSUME and event.get("marking", {}).get("isIncluded")):
+
+                if (event.get("label") == REPLY_CONSUME and event.get("marking", {}).get("isIncluded")):
                     reply_consume = True
-                    self.last_reply_consume_id = self.searchIDByLabel(self.REPLY_CONSUME, data)
-                else:
-                    self.last_reply_consume_id = ""
+                    self.last_reply_consume_id = event.get("id")
+
+                print("New CONSUME ID: "+ self.last_consume_id)
+                print("New REPLY ID: "+ self.last_reply_id)
+                print("New ACCEPT ID: "+ self.last_accept_id)
+                print("New REPLY_CONSUME ID: "+ self.last_reply_consume_id)
 
             self.controller.turn_off_all()
             if consume:
@@ -127,20 +132,21 @@ class MainApp:
         except Exception as e:
             print(f"Error: {e}")
 
-    def searchIDByLabel(self, label, data):
-        try:
-            # data can be dict or JSON string
-            if isinstance(data, str):
-                data = json.loads(data)
-            events = data.get("events", [])
-            for event in events:
-                if event.get("label") == label:
-                    return event.get("id")
-            print(f"Event with label '{label}' not found.")
-            return None
-        except Exception as e:
-            print(f"Error parsing JSON or searching for label: {e}")
-            return None
+#    def searchIDByLabel(self, label, data):
+#        try:
+#            # data can be dict or JSON string
+#            if isinstance(data, str):
+#                data = json.loads(data)
+#            events = data.get("events", [])
+#            for event in events:
+#                if event.get("label") == label:
+#                    print("Event "+label+" has now id: "+event.get("id"))
+#                    return event.get("id")
+#            print(f"Event with label '{label}' not found.")
+#            return None
+#        except Exception as e:
+#            print(f"Error parsing JSON or searching for label: {e}")
+#            return None
 
 
 ########################       MAIN      ##########################
@@ -154,8 +160,17 @@ async def main():
     def run_websocket():
         asyncio.run(MainApp_instance.listen_websocket(uri))
 
-    buttonMonitor = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-    buttonMonitor.set_on_button_press(lambda: asyncio.run(executeConsume(MainApp_instance.getLastConsumeID())))
+    buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
+    buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeConsume(MainApp_instance.getLastConsumeID() )))
+
+    buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
+    buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeReply(MainApp_instance.getLastReplyID() )))
+
+    buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
+    buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeAccept(MainApp_instance.getLastAcceptID())))
+
+    buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
+    buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeReplyConsume(MainApp_instance.getLastReplyConsumeID())))
 
     thread = threading.Thread(target=run_websocket)
     while True:
