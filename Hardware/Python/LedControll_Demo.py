@@ -8,7 +8,7 @@ This code supports:
 4 LEDS on pins 4, 17, 27, 22
 """
 # GPIO line offsets (pin numbers)
-led_lines = [ 6,13,19,26]
+led_lines = [ 26,19,13,6]
 
 led = [None, None, None, None]
 ledStates = [0, 0, 0, 0]
