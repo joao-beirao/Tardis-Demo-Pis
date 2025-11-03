@@ -5,7 +5,10 @@ import dcr.common.data.values.Value;
 import dcr.common.events.userset.expressions.UserSetExpression;
 import dcr.common.events.userset.values.SetUnionVal;
 import dcr.common.events.userset.values.UserSetVal;
-import dcr.model.events.*;
+import dcr.model.events.ComputationEventElement;
+import dcr.model.events.EventElement;
+import dcr.model.events.InputEventElement;
+import dcr.model.events.ReceiveEventElement;
 import dcr.runtime.elements.events.ComputationEventInstance;
 import dcr.runtime.elements.events.EventInstance;
 import dcr.runtime.elements.events.InputEventInstance;
@@ -18,13 +21,15 @@ import java.util.Optional;
 
 final class Events {
     // TODO [deprecate]
-    // public static ComputationInstance newLocalComputationInstance(String localUID, String remoteID,
+    // public static ComputationInstance newLocalComputationInstance(String localUID,
+    // String remoteID,
     //         ComputationEventElement baseElement) {
     //     return new ComputationInstance(localUID, remoteID, baseElement);
     // }
 
-    public static ComputationInstance newComputationInstance(String localUID, String remoteID,
-            ComputationEventElement baseElement) {
+    public static ComputationInstance newComputationInstance(String localUID,
+                                                             String remoteID,
+                                                             ComputationEventElement baseElement) {
         return new ComputationInstance(localUID, remoteID, baseElement);
     }
 
@@ -35,26 +40,30 @@ final class Events {
     // }
 
     public static InputInstance newInputInstance(String localUID, String remoteID,
-            InputEventElement baseElement) {
+                                                 InputEventElement baseElement) {
         return InputInstance.of(localUID, remoteID, baseElement);
     }
 
     public static ReceiveInstance newReceiveInstance(String localUID, String remoteID,
-            ReceiveEventElement baseElement) {
-        return new ReceiveInstance(localUID, remoteID, baseElement);
+                                                     ReceiveEventElement baseElement) {
+        return ReceiveInstance.of(localUID, remoteID, baseElement);
     }
 
-    public static GenericEventInstance newInstance(String localUID, String remoteID, EventElement baseElement) {
+    public static GenericEventInstance newInstance(String localUID, String remoteID,
+                                                   EventElement baseElement) {
         return switch (baseElement) {
-            case ComputationEventElement e -> newComputationInstance(localUID, remoteID, e);
+            case ComputationEventElement e ->
+                    newComputationInstance(localUID, remoteID, e);
             case InputEventElement e -> newInputInstance(localUID, remoteID, e);
             case ReceiveEventElement e -> newReceiveInstance(localUID, remoteID, e);
         };
     }
 
-    public static GenericEventInstance instantiate(String localUID, String remoteID, EventElement baseElement) {
+    public static GenericEventInstance instantiate(String localUID, String remoteID,
+                                                   EventElement baseElement) {
         return switch (baseElement) {
-            case ComputationEventElement e -> newComputationInstance(localUID, remoteID, e);
+            case ComputationEventElement e ->
+                    newComputationInstance(localUID, remoteID, e);
             case InputEventElement e -> newInputInstance(localUID, remoteID, e);
             case ReceiveEventElement e -> newReceiveInstance(localUID, remoteID, e);
         };
@@ -80,12 +89,13 @@ sealed abstract class GenericEventInstance
         }
 
         static MutableMarking of(Marking other) {
-            return new MutableMarking(other.hasExecuted(), other.isPending(), other.isIncluded(),
+            return new MutableMarking(other.hasExecuted(), other.isPending(),
+                    other.isIncluded(),
                     other.value());
         }
 
         private MutableMarking(boolean hasExecuted, boolean isPending, boolean isIncluded,
-                Value value) {
+                               Value value) {
             this.hasExecuted = hasExecuted;
             this.isPending = isPending;
             this.isIncluded = isIncluded;
@@ -106,7 +116,8 @@ sealed abstract class GenericEventInstance
 
         @Override
         public String toString() {
-            return String.format("(%b, %b, %b, %s)", hasExecuted, isPending, isIncluded, value);
+            return String.format("(%b, %b, %b, %s)", hasExecuted, isPending, isIncluded,
+                    value);
         }
     }
 
@@ -195,12 +206,14 @@ final class ComputationInstance
     // TODO [remove] this is a temporary patch for demo purposes
     UserSetVal receivers;
 
-    ComputationInstance(String localUID, String remoteID, ComputationEventElement baseElement, UserSetVal receivers) {
+    ComputationInstance(String localUID, String remoteID,
+                        ComputationEventElement baseElement, UserSetVal receivers) {
         super(localUID, remoteID, baseElement);
         this.receivers = receivers;
     }
 
-    ComputationInstance(String localUID, String remoteID, ComputationEventElement baseElement) {
+    ComputationInstance(String localUID, String remoteID,
+                        ComputationEventElement baseElement) {
         this(localUID, remoteID, baseElement, new SetUnionVal(List.of()));
     }
 
@@ -221,13 +234,16 @@ final class ComputationInstance
     @Override
     public String toString() {
         return String.format("[%s] %s - %s(%s : %s) [%s] (%s) [%s]", localUID(),
-                receivers().map(ignored -> "Tx").orElse("Local"), marking().toStringPrefix(),
+                receivers().map(ignored -> "Tx").orElse("Local"),
+                marking().toStringPrefix(),
                 remoteID(), label(), computationExpression(), value(),
-                receivers().map(r -> String.format("@self ->" + " %s", r)).orElse("Local"));
+                receivers().map(r -> String.format("@self ->" + " %s", r))
+                        .orElse("Local"));
     }
 
     public String unparse(String indentation) {
-        return String.format("%s%s - (%s: %s) [%s] %s", indentation, localUID(), remoteID(), label(),
+        return String.format("%s%s - (%s: %s) [%s] %s", indentation, localUID(),
+                remoteID(), label(),
                 computationExpression().toString(), marking());
     }
 }
@@ -242,16 +258,20 @@ final class InputInstance
     // TODO [remove] this is a temporary patch for demo purposes
     UserSetVal receivers;
 
-    private InputInstance(String localUID, String remoteID, InputEventElement baseElement, UserSetVal receivers) {
+    private InputInstance(String localUID, String remoteID, InputEventElement baseElement,
+                          UserSetVal receivers) {
         super(localUID, remoteID, baseElement);
         this.receivers = receivers;
     }
 
-    static InputInstance of(String localUID, String remoteID, InputEventElement baseElement) {
-        return new InputInstance(localUID, remoteID, baseElement, new SetUnionVal(List.of()));
+    static InputInstance of(String localUID, String remoteID,
+                            InputEventElement baseElement) {
+        return new InputInstance(localUID, remoteID, baseElement,
+                new SetUnionVal(List.of()));
     }
 
-    static InputInstance of(String localUID, String remoteID, InputEventElement baseElement, UserSetVal receivers) {
+    static InputInstance of(String localUID, String remoteID,
+                            InputEventElement baseElement, UserSetVal receivers) {
         return new InputInstance(localUID, remoteID, baseElement, receivers);
     }
 
@@ -286,8 +306,34 @@ final class ReceiveInstance
         implements ReceiveEventInstance {
 
 
-    ReceiveInstance(String globalId, String localId, EventElement baseElement) {
+    // TODO [remove] this is a temporary patch for demo purposes
+    UserSetVal initiators;
+
+    private ReceiveInstance(String globalId, String localId, EventElement baseElement,
+                            UserSetVal initiators) {
         super(globalId, localId, baseElement);
+        this.initiators = initiators;
+    }
+
+    static ReceiveInstance of(String localUID, String remoteID,
+                              ReceiveEventElement baseElement) {
+        return new ReceiveInstance(localUID, remoteID, baseElement,
+                new SetUnionVal(List.of()));
+    }
+
+    static ReceiveInstance of(String localUID, String remoteID,
+                              ReceiveEventElement baseElement, UserSetVal initiators) {
+        return new ReceiveInstance(localUID, remoteID, baseElement, initiators);
+    }
+//    ReceiveInstance(String globalId, String localId, EventElement baseElement,
+//    UserSetVal initiators) {
+//        super(globalId, localId, baseElement);
+//    }
+
+    // TODO [remove] this is a temporary broken fix
+    @Override
+    public UserSetVal initiatorUsers() {
+        return initiators;
     }
 
     @Override

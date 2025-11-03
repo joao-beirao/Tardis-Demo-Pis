@@ -33,10 +33,18 @@ Acording to the image, the software maps the LED pins to GPIO pins `6, 13, 19, 2
 
 The Push buttons on the other hand, are assigned to GPIO Pins `24, 17, 27, 22`, and should be connected to a 3.3V Pin.
 
-
+## Avahi-Daemon Setup
+```
+sudo apt install avahi-daemon # in case needed
+sudo systemctl enable avahi-daemon
+sudo systemctl start avahi-daemon
+```
 
 ## Session information
+
+
 In order to properly connect to the raspberry remotely, an SSH connection must be established like so:
 ```
-sudo ssh pi-1@p-3-1
+sudo ssh pi-1@p-3-1.local
 ```
+

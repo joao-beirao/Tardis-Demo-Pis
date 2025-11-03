@@ -9,7 +9,7 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.DEDUCTION)
-@JsonTypeName(value = "role")
+@JsonTypeName(value = "membershipDTO")
 public record RoleDTO(@JsonProperty(value = "label", required = true) String label,
                       @JsonInclude(JsonInclude.Include.NON_EMPTY) @JsonProperty(value = "params") List<ParamDTO> params) {
     @JsonCreator

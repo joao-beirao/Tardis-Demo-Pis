@@ -5,10 +5,13 @@ import jakarta.ws.rs.container.AsyncResponse;
 import jakarta.ws.rs.container.Suspended;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import rest.request.EndpointReconfigurationRequestDTO;
 import rest.request.InputRequestDTO;
 
 public interface DCRGraphAPI {
     String PATH = "/dcr";
+    String ENDPOINT = "/endpoint";
+    String RECONFIGURATION = "/reconfiguration";
     String EVENTS = "/events";
     String ENABLE = "/enable";
     String COMPUTATION = "/computation";
@@ -59,4 +62,11 @@ public interface DCRGraphAPI {
             @Suspended AsyncResponse ar,
             @PathParam(EVENT_ID) String eventId,
             InputRequestDTO input);
+
+    @PUT
+    @Path(RECONFIGURATION)
+    @Consumes(MediaType.APPLICATION_JSON)
+    void reconfigureEndpoint(
+            @Suspended AsyncResponse ar,
+            EndpointReconfigurationRequestDTO input);
 }

@@ -226,6 +226,4 @@ public final class CLI {
       Value val = parseInputVal(valueAsString);
       return new Record.Field<>(name, val);
     }
-
-
 }

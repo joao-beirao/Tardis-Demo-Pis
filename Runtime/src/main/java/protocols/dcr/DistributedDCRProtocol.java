@@ -104,8 +104,7 @@ public class DistributedDCRProtocol
     }
 
     /**
-     * Handle when an open connection operation succeeded Start the periodic timer to send Ping
-     * pingpong.messages
+     * Handle when an open connection operation succeeded
      *
      * @param event
      *         OutConnectionUp event
@@ -126,7 +125,7 @@ public class DistributedDCRProtocol
      */
     private void uponOutConnectionFailed(OutConnectionFailed<ProtoMessage> event, int channel) {
         logger.debug(event);
-        //System.exit(1);
+//        System.exit(1);
     }
 
     /**
@@ -144,16 +143,8 @@ public class DistributedDCRProtocol
         sendMessage(channelId,
                 new DCRRequest(message, marking, sender, idExtensionToken),
                 destination);
-        // logger.debug("Ping message sent");
         // closeConnection(destination, channelId);
     }
-    // public void sendPingMessage(Host destination, String message, String marking) {
-    //     logger.debug("Sending Ping Message to {} on channel {} with message {}", destination,
-    //     channelId, message);
-    //     sendMessage(channelId, new PingMessage(++nextPingId, message, marking), destination);
-    //     // logger.debug("Ping message sent");
-    //     // closeConnection(destination, channelId);
-    // }
 
     /**
      * Handle a newly received Ping Message Reply to the Source Host with a Pong Message
@@ -225,7 +216,7 @@ public class DistributedDCRProtocol
     }
 
     /**
-     * Handle the case when someone opened a connection to this node Print the event
+     * Handle the case when someone opened a connection to this node
      *
      * @param event
      *         the event containing the connection information
@@ -233,11 +224,11 @@ public class DistributedDCRProtocol
      *         the channel ID (from which channel the event was received)
      */
     private void uponInConnectionUp(InConnectionUp event, int channel) {
-        logger.debug(event);
+        logger.warn(event);
     }
 
     /**
-     * Handle the case when someone closed a connection to this node Print the event
+     * Handle the case when someone closed a connection to this node
      *
      * @param event
      *         the event containing the connection information
@@ -245,11 +236,11 @@ public class DistributedDCRProtocol
      *         the channel ID (from which channel the event was received)
      */
     private void uponInConnectionDown(InConnectionDown event, int channel) {
-        logger.info(event);
+        logger.warn(event);
     }
 
     /**
-     * Handle the case when a connection to a remote node went down or was closed Print the event
+     * Handle the case when a connection to a remote node went down or was closed
      *
      * @param event
      *         the event containing the connection information

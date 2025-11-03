@@ -1,0 +1,123 @@
+{
+  "membershipDTO": {
+    "role": "P",
+    "params": {
+      "id": {
+        "stringLit": {
+          "value": 1
+        }
+      },
+      "cid": {
+        "intLit": {
+          "value": 1
+        }
+      }
+    }
+  },
+  "endpointsDTO": [
+    {
+      "role": {
+        "label": "P",
+        "params": [
+          {
+            "name": "id",
+            "type": {
+              "valueType": "string"
+            }
+          },
+          {
+            "name": "cid",
+            "type": {
+              "valueType": "int"
+            }
+          }
+        ]
+      },
+      "graph": {
+        "events": [
+          {
+            "inputEvent": {
+              "common": {
+                "endpointElementUID": "csm_2_Tx",
+                "choreoElementUID": "csm_2",
+                "id": "csm",
+                "label": "consume",
+                "dataType": {
+                  "recordType": {
+                    "fields": [
+                      {
+                        "name": "kw",
+                        "type": {
+                          "valueType": "int"
+                        }
+                      }
+                    ]
+                  }
+                },
+                "marking": {
+                  "isPending": false,
+                  "isIncluded": true
+                },
+                "ifcConstraint": {
+                  "boolLit": {
+                    "value": true
+                  }
+                }
+              },
+              "receivers": [
+                {
+                  "roleExpr": {
+                    "roleLabel": "P",
+                    "params": [
+                      {
+                        "name": "id"
+                      },
+                      {
+                        "name": "cid",
+                        "value": {
+                          "propDeref": {
+                            "propBasedExpr": {
+                              "propDeref": {
+                                "propBasedExpr": {
+                                  "eventRef": {
+                                    "value": "_@self"
+                                  }
+                                },
+                                "prop": "params"
+                              }
+                            },
+                            "prop": "cid"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "relations": []
+      }
+    },
+    {
+      "role": {
+        "label": "CO",
+        "params": [
+          {
+            "name": "cid",
+            "type": {
+              "valueType": "int"
+            }
+          }
+        ]
+      },
+      "graph": {
+        "events": [
+        ],
+        "relations": [
+        ]
+      }
+    }
+  ]
+}

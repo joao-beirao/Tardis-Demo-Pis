@@ -1,6 +1,7 @@
 package app.presentation.mappers;
 
 import app.presentation.endpoint.EndpointDTO;
+import app.presentation.endpoint.EndpointsDTO;
 import app.presentation.endpoint.GraphDTO;
 import app.presentation.endpoint.RoleDTO;
 import app.presentation.endpoint.data.computation.*;
@@ -240,7 +241,7 @@ public final class EndpointMapper {
         };
     }
 
-    // TODO [monitor] under the current assumptions, role will always be parameterised
+    // TODO [monitor] under the current assumptions, membershipDTO will always be parameterised
     //  - may change
     private static UserSetExpression fromUserSetExprDTO(UserSetExprDTO dto) {
         return switch (dto) {

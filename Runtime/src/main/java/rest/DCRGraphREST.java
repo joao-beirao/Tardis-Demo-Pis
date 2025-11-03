@@ -1,5 +1,16 @@
 package rest;
 
+import app.presentation.endpoint.data.values.BoolValDTO;
+import app.presentation.endpoint.data.values.IntValDTO;
+import app.presentation.endpoint.data.values.StringValDTO;
+import app.presentation.mappers.EndpointMapper;
+import dcr.common.Record;
+import dcr.common.data.types.Type;
+import dcr.common.data.values.BoolVal;
+import dcr.common.data.values.IntVal;
+import dcr.common.data.values.StringVal;
+import dcr.common.data.values.Value;
+import dcr.common.events.userset.values.UserVal;
 import jakarta.inject.Singleton;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.container.AsyncResponse;
@@ -8,16 +19,20 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import protocols.application.Endpoint;
 import pt.unl.di.novasys.babel.webservices.application.GenericWebServiceProtocol.WebServiceOperation;
 import pt.unl.di.novasys.babel.webservices.rest.GenericREST;
 import pt.unl.di.novasys.babel.webservices.utils.EndpointPath;
 import pt.unl.di.novasys.babel.webservices.utils.GenericWebAPIResponse;
 import pt.unl.di.novasys.babel.webservices.utils.PendingResponse;
+import rest.request.EndpointReconfigurationRequestDTO;
 import rest.request.InputRequestDTO;
+import rest.resources.EndpointReconfigurationRequest;
 import rest.resources.InputEventExecuteRequest;
 import rest.response.Mappers;
 
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Singleton @Path(DCRGraphAPI.PATH) public class DCRGraphREST extends
         GenericREST implements DCRGraphAPI {
@@ -27,6 +42,7 @@ import java.util.concurrent.TimeUnit;
 
     public enum DCREndpoints implements EndpointPath {
         ENDPOINT_PROCESS("endpoint_process"),
+        RECONFIGURATION("reconfiguration"),
         EVENT("eventId"),
         EVENTS("events"),
         ENABLE("enable"),
@@ -100,6 +116,62 @@ import java.util.concurrent.TimeUnit;
                 DCREndpoints.INPUT, ar);
     }
 
+    private static UserVal instantiateSelf(
+            EndpointReconfigurationRequestDTO.MembershipDTO membershipDTO,
+            Endpoint.Role roleDecl) {
+        return UserVal.of(roleDecl.roleName(),
+                dcr.common.Record.ofEntries(roleDecl.params()
+                        .stream()
+                        .map(param -> fetchSelfParamField(membershipDTO, param.name(),
+                                param.value()))
+                        .collect(
+                                Collectors.toMap(dcr.common.Record.Field::name,
+                                        dcr.common.Record.Field::value))));
+    }
+
+    private static dcr.common.Record.Field<Value> fetchSelfParamField(
+            EndpointReconfigurationRequestDTO.MembershipDTO membershipDTO, String key,
+            Type type) {
+        var valueDTO = membershipDTO.params().get(key);
+        return Record.Field.of(key, switch (valueDTO) {
+            case BoolValDTO val -> BoolVal.of(val.value());
+            case IntValDTO val -> IntVal.of(val.value());
+            case StringValDTO val -> StringVal.of(val.value());
+            default -> throw new IllegalStateException(
+                    "Unexpected value for membershipDTO param: " + type);
+        });
+    }
+
+//    private static Endpoint decodeEndpoint(String jsonEncodedEndpoint, String role)
+//            throws JsonProcessingException {
+////        TODO use membershipDTO to deserialize
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.registerModule(new Jdk8Module());
+//        var deserializedEndpoints = objectMapper.readValue(jsonEncodedEndpoint,
+//        EndpointsDTO.class);
+//        var deserializedEndpoint = deserializedEndpoints.endpoints().get(role);
+
+    /// /        var deserializedEndpoint = objectMapper.readValue(jsonEncodedEndpoint,
+    ///  EndpointDTO.class);
+//        return EndpointMapper.mapEndpoint(deserializedEndpoint);
+//    }
+    @Override
+    public void reconfigureEndpoint(
+            @Suspended AsyncResponse ar,
+            EndpointReconfigurationRequestDTO request) {
+        logger.info("\n\nReceived request: endpoint reconfiguration {}",
+                request.membershipDTO());
+        var membershipDTO = request.membershipDTO();
+        var deserializedEndpoint =
+                request.endpointsDTO().endpoints().get(membershipDTO.role());
+        var endpoint = EndpointMapper.mapEndpoint(deserializedEndpoint);
+        ;
+        var self = instantiateSelf(membershipDTO, endpoint.role());
+        this.sendRequest(WebServiceOperation.UPDATE,
+                new EndpointReconfigurationRequest(self, endpoint.graphElement()),
+                DCREndpoints.RECONFIGURATION, ar);
+    }
+
     @Override
     public void triggerResponse(String opUID, GenericWebAPIResponse genericResponse) {
         PendingResponse pendingResponse = super.removePendingResponse(opUID);
@@ -111,12 +183,14 @@ import java.util.concurrent.TimeUnit;
                     sendStatusResponse(ar, Response.Status.INTERNAL_SERVER_ERROR,
                             ERROR_MESSAGE);
                 } else {sendResponse(ar, genericResponse);}
+                break;
             case EVENTS:
             case ENABLE:
                 if (genericResponse == null) {
                     sendStatusResponse(ar, Response.Status.INTERNAL_SERVER_ERROR,
                             ERROR_MESSAGE);
                 } else {sendResponse(ar, genericResponse.getValue());}
+                break;
             case COMPUTATION:
             case INPUT:
                 if (genericResponse == null) {
@@ -126,7 +200,17 @@ import java.util.concurrent.TimeUnit;
                     sendStatusResponse(ar, genericResponse.getStatusCode(),
                             genericResponse.getMessage());
                 }
+                break;
+            case RECONFIGURATION:
+                if (genericResponse == null) {
+                    sendStatusResponse(ar, Response.Status.INTERNAL_SERVER_ERROR,
+                            ERROR_MESSAGE);
+                } else {
+                    sendStatusResponse(ar, genericResponse.getStatusCode(),
+                            genericResponse.getMessage());
+                }
             default:
+                logger.info("Unexpected opUId {}", opUID);
                 break;
         }
     }
@@ -138,7 +222,8 @@ import java.util.concurrent.TimeUnit;
 //                .header("Access-Control-Allow-Methods",
 //                        "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 //                .header("Access-Control-Allow-Headers",
-//                        "origin, content-type, accept, authorization,access-control-allow-origin")
+//                        "origin, content-type, accept, authorization,
+//                        access-control-allow-origin")
                 .entity(value)
                 .build();
         ar.resume(response);
@@ -153,7 +238,8 @@ import java.util.concurrent.TimeUnit;
 //                        .header("Access-Control-Allow-Methods",
 //                                "GET, POST, PUT, DELETE, OPTIONS, HEAD")
 //                        .header("Access-Control-Allow-Headers",
-//                                "origin, content-type, accept, authorization,access-control-allow-origin")
+//                                "origin, content-type, accept, authorization,
+//                                access-control-allow-origin")
                         .entity(message).build();
         ar.resume(response);
     }

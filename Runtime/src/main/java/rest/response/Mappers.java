@@ -8,6 +8,7 @@ import dcr.common.events.userset.values.*;
 import dcr.runtime.elements.events.ComputationEventInstance;
 import dcr.runtime.elements.events.EventInstance;
 import dcr.runtime.elements.events.InputEventInstance;
+import dcr.runtime.elements.events.ReceiveEventInstance;
 import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.ArrayList;
@@ -106,6 +107,8 @@ public final class Mappers {
                     toUserSetValDTO(e2.receiverUsers()), typeExpr,
                     e2.receivers().isPresent() ? KindDTO.INPUT_SEND : KindDTO.INPUT,
                     marking, timestamp);
+            case ReceiveEventInstance e3 -> EventDTO.newReceiveEventDTO(id, label,
+                    toUserSetValDTO(e3.initiatorUsers()), typeExpr, marking, timestamp);
             default -> throw new IllegalStateException("Unexpected value: " + e);
         };
     }

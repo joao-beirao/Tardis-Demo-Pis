@@ -200,6 +200,7 @@ dcr/runtime/communication/MembershipLayer$Neighbour.class
 protocols/application/DCRApp$1.class
 app/presentation/endpoint/data/computation/IntLiteralDTO.class
 dcr/model/GraphElement.class
+rest/resources/EndpointReconfigurationRequest.class
 app/presentation/endpoint/data/types/RefTypeDTO.class
 app/presentation/endpoint/events/InputEventDTO.class
 dcr/model/events/EventElements.class
@@ -209,6 +210,8 @@ app/presentation/endpoint/events/participants/RoleExprDTO$ParamDTO.class
 rest/DCRGraphREST$DCREndpoints.class
 app/presentation/endpoint/events/EventDTO$MarkingDTO.class
 dcr/common/data/types/EventType.class
+app/presentation/endpoint/EndpointsDTO.class
+rest/request/EndpointReconfigurationRequestDTO.class
 rest/response/EndpointDTO.class
 app/presentation/endpoint/data/types/RecordTypeDTO.class
 dcr/common/relations/Relation.class
@@ -223,3 +226,4 @@ rest/request/InputRequestDTO.class
 dcr/model/events/ImmutableMarkingElement.class
 dcr/common/Environment.class
 dcr/runtime/GraphRunner.class
+rest/request/EndpointReconfigurationRequestDTO$MembershipDTO.class

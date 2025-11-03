@@ -7,15 +7,23 @@ import aiohttp
 import threading
 import LedControll_Demo as controller
 import ButtonControll as button_control
-from EventExecution import executeConsume, executeReply, executeReplyConsume, executeAccept
+from EventExecution import executeConsume, executeReply, executeReplyConsume, executeAccept, executeRequestForecast, executeAccounting
+import argparse
 
 BUTTON_PINS = [24, 17, 27, 22]
 CHIP_NUMBER = 0
-# Events tracked
+
+# Events tracked Choreography #1
+# P
 CONSUME = "consume"
 REPLY_FORECAST = "r4c_replyForecast"
 ACCEPT = "accept"
 REPLY_CONSUME = "csm_reply"
+# CO
+REQUEST_FORECAST = "_r4c_0"
+ACCOUNTING = "_accounting_1"
+
+
 
 class MainApp:
 
@@ -36,6 +44,10 @@ class MainApp:
         return self.last_accept_id
     def getLastReplyConsumeID(self):
         return self.last_reply_consume_id
+    def getLastRequestForecastID(self):
+        return self.last_request_forecast_id
+    def getLastAccountingID(self):
+        return self.last_accounting_id
 
     async def trigger_response(self):
         URL = "http://localhost:8080/rest/dcr/events/enable"  # Replace with your desired URL
@@ -50,42 +62,58 @@ class MainApp:
             data = json.loads(Json)
             print(f"Received JSON: {data}")
             events = data.get("events", [])
+            # Choreography #1
+            # P
             consume = False
             reply_forecast = False
             accept = False
             reply_consume = False
-
             self.last_consume_id = ""
             self.last_reply_id = ""
             self.last_accept_id = ""
             self.last_reply_consume_id = "" 
+            # CO
+            request_forecast = False
+            accounting = False
+            self.last_request_forecast_id = ""
+            self.last_accounting_id = ""
 
             for event in events:
+                # P
                 if (event.get("label") == CONSUME and event.get("marking", {}).get("isIncluded")):
                     consume = True
                     self.last_consume_id =  event.get("id")
-
 
                 if (event.get("label") == REPLY_FORECAST and event.get("marking", {}).get("isIncluded")):
                     reply_forecast = True
                     self.last_reply_id = event.get("id")
 
-
                 if (event.get("label") == ACCEPT and event.get("marking", {}).get("isIncluded")):
                     accept = True
                     self.last_accept_id = event.get("id")
-
 
                 if (event.get("label") == REPLY_CONSUME and event.get("marking", {}).get("isIncluded")):
                     reply_consume = True
                     self.last_reply_consume_id = event.get("id")
 
+                # CO
+                if (event.get("label") == REQUEST_FORECAST and event.get("marking", {}).get("isIncluded")):
+                    request_forecast = True
+                    self.last_request_forecast_id = event.get("id")
+
+                if (event.get("label") == ACCOUNTING and event.get("marking", {}).get("isIncluded")):
+                    accounting = True
+                    self.last_accounting_id = event.get("id")
+
                 print("New CONSUME ID: "+ self.last_consume_id)
                 print("New REPLY ID: "+ self.last_reply_id)
                 print("New ACCEPT ID: "+ self.last_accept_id)
                 print("New REPLY_CONSUME ID: "+ self.last_reply_consume_id)
+                print("New REQUEST_FORECAST ID: "+ self.last_request_forecast_id)
+                print("New ACCOUNTING ID: "+ self.last_accounting_id)
 
             self.controller.turn_off_all()
+            # P
             if consume:
                 self.controller.turn_on(0)
             if reply_forecast:
@@ -94,6 +122,11 @@ class MainApp:
                 self.controller.turn_on(2)
             if reply_consume:
                 self.controller.turn_on(3)
+            # CO
+            if request_forecast:
+                self.controller.turn_on(3)
+            if accounting:
+                self.controller.turn_on(2)
 
         except Exception as e:
             print(f"Error parsing JSON or counting events: {e}")
@@ -152,7 +185,7 @@ class MainApp:
 ########################       MAIN      ##########################
 
 
-async def main():
+async def main(ROLE):
     uri = "ws://localhost:8080/dcr" 
 
     MainApp_instance = MainApp(controller, button_control)
@@ -160,17 +193,24 @@ async def main():
     def run_websocket():
         asyncio.run(MainApp_instance.listen_websocket(uri))
 
-    buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-    buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeConsume(MainApp_instance.getLastConsumeID() )))
+    if ROLE == "P":
+        buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
+        buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeConsume(MainApp_instance.getLastConsumeID() )))
 
-    buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
-    buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeReply(MainApp_instance.getLastReplyID() )))
+        buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
+        buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeReply(MainApp_instance.getLastReplyID() )))
 
-    buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
-    buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeAccept(MainApp_instance.getLastAcceptID())))
+        buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
+        buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeAccept(MainApp_instance.getLastAcceptID())))
 
-    buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
-    buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeReplyConsume(MainApp_instance.getLastReplyConsumeID())))
+        buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
+        buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeReplyConsume(MainApp_instance.getLastReplyConsumeID())))
+    if ROLE == "CO":
+        buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
+        buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeAccounting(MainApp_instance.getLastAccountingID())))
+
+        buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
+        buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeRequestForecast(MainApp_instance.getLastRequestForecastID())))
 
     thread = threading.Thread(target=run_websocket)
     while True:
@@ -186,15 +226,26 @@ def signal_handler(signum, frame):
     print("\nDisconnecting...")
     sys.exit(0)
 
+
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="Tardis demo hardware")
+    parser.add_argument("--type", default="P", help="Type of device")
+    args = parser.parse_args()
+
+    # make args available to the rest of the program (or pass into main)
+    DEVICE_TYPE = args.type
+
     # Install signal handler for graceful shutdown
     signal.signal(signal.SIGINT, signal_handler)
-    
+
     try:
-        asyncio.run(main())
+        # if you changed main signature to accept uri: asyncio.run(main(args.uri))
+        asyncio.run(main(args.type))
     except KeyboardInterrupt:
-        print("\nExiting...")
+        print("\nExiting (keyboard)...")
     finally:
         controller.cleanup()
         button_control.cleanup()
         sys.exit(0)
+    print("\nExiting...")

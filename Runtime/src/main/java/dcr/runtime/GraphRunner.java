@@ -6,7 +6,6 @@ import dcr.common.data.computation.ComputationExpression;
 import dcr.common.data.values.*;
 import dcr.common.events.Event;
 import dcr.common.events.userset.values.SetUnionVal;
-import dcr.common.events.userset.values.UserSetVal;
 import dcr.common.events.userset.values.UserVal;
 import dcr.model.GraphElement;
 import dcr.model.events.EventElement;
@@ -113,12 +112,12 @@ public final class GraphRunner {
         this.inputEvents = new HashMap<>();
         this.receiveEvents = new HashMap<>();
         this.controlFlowRelations = new HashMap<>();
-        includes = new HashMap<>();
-        excludes = new HashMap<>();
-        responses = new HashMap<>();
-        conditions = new HashMap<>();
-        milestones = new HashMap<>();
-        spawnRelations = new HashMap<>();
+        this.includes = new HashMap<>();
+        this.excludes = new HashMap<>();
+        this.responses = new HashMap<>();
+        this.conditions = new HashMap<>();
+        this.milestones = new HashMap<>();
+        this.spawnRelations = new HashMap<>();
     }
 
     public void init(GraphElement graphElement) {
@@ -414,6 +413,17 @@ public final class GraphRunner {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Returns the currently enabled events
+     *
+     * @return the currently enabled events
+     */
+    public List<EventInstance> events() {
+        return eventsByUuid.values().stream().map(EventInfo::event)
+//                .filter(e -> !(e instanceof ReceiveInstance))
+                .collect(Collectors.toList());
+    }
+
     /* =============================
      * Model-elements instantiation
      * ============================= */
@@ -458,7 +468,8 @@ public final class GraphRunner {
                 // TODO [remove] this is a temporary patch for demo purposes
                 e.receivers = e.baseElement().remoteParticipants()
                         .map(rcvExpr -> rcvExpr.eval(evalContext.valueEnv(),
-                                evalContext.userEnv())).orElse(new SetUnionVal(List.of()));
+                                evalContext.userEnv()))
+                        .orElse(new SetUnionVal(List.of()));
                 yield info;
             }
             case InputInstance e -> {
@@ -467,7 +478,8 @@ public final class GraphRunner {
                 // TODO [remove] this is a temporary patch for demo purposes
                 e.receivers = e.baseElement().remoteParticipants()
                         .map(rcvExpr -> rcvExpr.eval(evalContext.valueEnv(),
-                                evalContext.userEnv())).orElse(new SetUnionVal(List.of()));
+                                evalContext.userEnv()))
+                        .orElse(new SetUnionVal(List.of()));
                 yield info;
             }
             case ReceiveInstance e -> {

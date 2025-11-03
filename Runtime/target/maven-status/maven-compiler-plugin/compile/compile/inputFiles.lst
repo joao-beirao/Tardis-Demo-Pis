@@ -16,6 +16,7 @@
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/runtime/elements/events/LocallyInitiatedEventInstance.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/events/Event.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/data/computation/ComputationExprDTO.java
+/home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/EndpointsDTO.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/data/values/EventVal.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/data/computation/ComputationExpression.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/data/computation/PropDerefExpr.java
@@ -35,6 +36,7 @@
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/data/types/RefTypeDTO.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/runtime/monitoring/GraphObserver.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/rest/response/TypeDTO.java
+/home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/rest/resources/EndpointReconfigurationRequest.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/events/userset/values/RoleVal.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/data/types/EventTypeDTO.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/runtime/elements/events/RemotelyInitiatedEventInstance.java
@@ -126,6 +128,7 @@
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/data/computation/StringLiteral.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/events/participants/UserSetDiffExprDTO.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/events/userset/values/SetUnionVal.java
+/home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/rest/request/EndpointReconfigurationRequestDTO.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/data/values/IntValDTO.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/dcr/common/data/computation/BoolLiteral.java
 /home/n0tn0t/Documents/Tardis/code/Tardis-Demo-Pis/Runtime/src/main/java/app/presentation/endpoint/data/types/TypeDTO.java

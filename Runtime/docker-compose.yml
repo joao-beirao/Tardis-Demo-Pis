@@ -1,120 +1,124 @@
 services:
   p_1_1:
-      build:
-        context: .
-      image: dcr-babel
-      hostname: p-1-1
-      command:
-        - role=P
-        - id=1
-        - cid=1
-      ports:
-        - "1234:8080"
-      #networks:
-      #  - dcr-network
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-1-1.local"
+    command:
+      - role=P
+      - id=1
+      - cid=1
+    ports:
+      - "1234:8080"
+#    networks:
+#      - dcr-network
   p_2_1:
-      build:
-        context: .
-      image: dcr-babel
-      hostname: p-2-1
-      command:
-        - role=P
-        - id=2
-        - cid=1
-      ports:
-        - "1235:8080"
-      #networks:
-      #  - dcr-network
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-2-1.local"
+    command:
+      - role=P
+      - id=2
+      - cid=1
+    ports:
+      - "1235:8080"
+#    networks:
+#      - dcr-network
   p_3_1:
-      build:
-        context: .
-      image: dcr-babel
-      hostname: p-3-1
-      command:
-        - role=P
-        - id=3
-        - cid=1
-      ports:
-        - "1236:8080"
-      #networks:
-      #  - dcr-network
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-3-1.local"
+    command:
+      - role=P
+      - id=3
+      - cid=1
+    ports:
+      - "1236:8080"
+#    networks:
+#      - dcr-network
   p_1_2:
-      build:
-        context: .
-      image: dcr-babel
-      hostname: p-1-2
-      command:
-        - role=P
-        - id=1
-        - cid=2
-      ports:
-        - "1237:8080"
-      #networks:
-      #   - dcr-network
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-1-2.local"
+    command:
+      - role=P
+      - id=1
+      - cid=2
+    ports:
+      - "1237:8080"
+#    networks:
+#      - dcr-network
   p_2_2:
-      build:
-        context: .
-      image: dcr-babel
-      hostname: p-2-2
-      command:
-        - role=P
-        - id=2
-        - cid=2
-      ports:
-        - "1238:8080"
-      #networks:
-      # - dcr-network
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-2-2.local"
+    command:
+      - role=P
+      - id=2
+      - cid=2
+    ports:
+      - "1238:8080"
+#    networks:
+#      - dcr-network
   p_3_2:
-      build:
-        context: .
-      image: dcr-babel
-      hostname: p-3-2
-      command:
-        - role=P
-        - id=3
-        - cid=2
-      ports:
-        - "1239:8080"
-      #networks:
-      #  - dcr-network
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-3-2.local"
+    command:
+      - role=P
+      - id=3
+      - cid=2
+    ports:
+      - "1239:8080"
+#    networks:
+#      - dcr-network
+
   p_4_2:
       build:
         context: .
       image: dcr-babel
-      hostname: p-4-2
+      hostname: "p-4-2.local"
       command:
         - role=P
         - id=4
         - cid=2
       ports:
         - "1240:8080"
-      #networks:
-      #  - dcr-network
+#      networks:
+#        - dcr-network
+
   co_1:
       build:
         context: .
       image: dcr-babel
-      hostname: co-1
+      hostname: "co-1.local"
       command:
         - role=CO
         - cid=1
       ports:
         - "1241:8080"
-      #networks:
-      # - dcr-network
+#      networks:
+#        - dcr-network
+
   co_2:
       build:
         context: .
       image: dcr-babel
-      hostname: co-2
+      hostname: "co-2.local"
       command:
         - role=CO
         - cid=2
       ports:
         - "1242:8080"
-      #networks:
-      #  - dcr-network
+#      networks:
+#        - dcr-network
+
 #networks:
-#  swarm:
-#    name: swarm
+#  dcr-network:
+#    name: tardis-babel-backend-net
 #    external: true

@@ -2,6 +2,8 @@ package rest.response;
 
 import com.fasterxml.jackson.annotation.*;
 
+import static rest.response.KindDTO.RECEIVE;
+
 public class EventDTO {
     private static final String COMPUTATION_ACTION = "computation";
     private static final String INPUT_ACTION = "input";
@@ -44,6 +46,10 @@ public class EventDTO {
                                      MarkingDTO marking, long timestamp) {
         return new EventDTO(id, label, INPUT_ACTION, receivers ,typeExpr, kind, marking, timestamp);
     }
+    static EventDTO newReceiveEventDTO(String id, String label, UserSetValDTO senders, TypeDTO typeExpr,
+                                     MarkingDTO marking, long timestamp) {
+        return new EventDTO(id, label, INPUT_ACTION, senders ,typeExpr, RECEIVE, marking, timestamp);
+    }
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -60,7 +66,7 @@ record MarkingDTO(
 
 enum KindDTO {
     COMPUTATION("computation-action"), COMPUTATION_SEND("computation-send"),
-    INPUT_SEND("input-send"), INPUT("input-action");
+    INPUT_SEND("input-send"), INPUT("input-action"), RECEIVE("receive"),;
 
     @JsonProperty(value = "value")
     private final String value;

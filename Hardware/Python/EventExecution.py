@@ -68,6 +68,25 @@ async def executeReply(id):
     }
     await executeEvent(URL(id), payload)
 
+async def executeRequestForecast(id):
+    payload = {
+        "eventID": f"{id}",
+        "value": {
+            "type": "Unit",
+            "value": ""
+        }
+    }
+    await executeEvent(URL(id), payload)
+
+async def executeAccounting(id):
+    payload = {
+        "eventID": f"{id}",
+        "value": {
+            "type": "Number",
+            "value": "123"
+        }
+    }
+    await executeEvent(URL(id), payload)
 
 #def searchIDByLabel(label, Json):
 #    try:
