@@ -10,7 +10,7 @@ import ButtonControll as button_control
 from EventExecution import executeConsume, executeReply, executeReplyConsume, executeAccept, executeRequestForecast, executeAccounting
 import argparse
 
-BUTTON_PINS = [24, 17, 27, 22]
+BUTTON_PINS = [24, 22, 27, 17]
 CHIP_NUMBER = 0
 
 # Events tracked Choreography #1
