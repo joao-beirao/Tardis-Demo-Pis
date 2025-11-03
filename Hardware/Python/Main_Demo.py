@@ -20,8 +20,8 @@ REPLY_FORECAST = "r4c_replyForecast"
 ACCEPT = "accept"
 REPLY_CONSUME = "csm_reply"
 # CO
-REQUEST_FORECAST = "_r4c_0"
-ACCOUNTING = "_accounting_1"
+REQUEST_FORECAST = "request_forecast"
+ACCOUNTING = "accounting"
 
 
 
