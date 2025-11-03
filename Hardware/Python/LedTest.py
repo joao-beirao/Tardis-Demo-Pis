@@ -9,18 +9,12 @@ async def wait(ms):
 
 async def main():
     i = 0
-    j = 0
     while True:
-        print(f"Turning on LED at ({i}, {j})")
-        
-        controller.turn_on(i, j)
+        print(f"Turning on LED at ({i})")
+        controller.turn_on(i)
         await wait(1000)
-        controller.turn_off(i, j)
-        
-        # Update indices
-        j = (j + 1) % 3
-        if j == 0:
-            i = (i + 1) % 2
+        controller.turn_off(i)
+        i = (i + 1) % 4
         
 def cleanup(signum=None, frame=None):
     """Cleanup on exit"""
