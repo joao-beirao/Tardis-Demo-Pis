@@ -1,7 +1,7 @@
 import asyncio
 import signal
 import sys
-import LedControll as controller
+import LedControll_Demo as controller
 
 async def wait(ms):
     """Wait for specified milliseconds"""
