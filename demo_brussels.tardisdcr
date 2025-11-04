@@ -1,0 +1,36 @@
+CO(cid:Integer)
+P(id:String; cid:Integer)
+Public
+;
+Public flows CO
+Public flows P
+;
+%(acc:Accounting) (Public) [?] [CO(cid=1)]
+(c:consume) (Public) [?] [P(id=*; #cid as X) -> P(id=*; cid=X),  CO(cid=X)]
+(rq_f:request_fcast) (Public) [?] [CO(#cid as X) -> P(id=*; cid=X)]
+(c_co:Consume_CO) (Public) [?] [CO(cid=*) -> CO(cid=*)]
+;
+rq_f -->> {
+    !(rp_f:reply_fcast) (Public) [?] [@Receiver(rq_f) -> @Initiator(rq_f)]
+    ;
+    rp_f -->% rp_f
+    rp_f -->* acc
+    rq_f -->% rp_f
+}
+c -->> {
+    (rep:reply) (Public) [?] [@Receiver(c) -> @Initiator(c)]
+    (dec:decision) (Public) [?] [@Initiator(c) -> @Receiver(c)]
+    ;
+    rep -->% rep
+    dec -->% dec
+    rep -->* dec
+  }
+  c_co -->> {
+    (reply:Reply_CO) (Public) [?] [@Receiver(c_co) -> @Initiator(c_co)]
+    ;
+    reply -->% reply
+}
+acc -->% acc
+acc --><> rq_f
+rq_f *--> acc
+rq_f -->+ acc
