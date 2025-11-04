@@ -7,24 +7,30 @@ import sys
 BUTTON_PINS = [24, 22, 27, 17]
 CHIP_NUMBER = 0
 
+async def turnOnLed(index):
+    controller.turn_on(index)
+    await asyncio.sleep(1)  # Wait before reconnecting
+    controller.turn_off(index)
+
+
 async def main():
 
     buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-    buttonMonitor1.set_on_button_press(lambda: controller.turn_on(0))
+    buttonMonitor1.set_on_button_press(lambda: turnOnLed(0))
 
     buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
-    buttonMonitor2.set_on_button_press(lambda: controller.turn_on(1))
+    buttonMonitor2.set_on_button_press(lambda: turnOnLed(1))
 
     buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
-    buttonMonitor3.set_on_button_press(lambda: controller.turn_on(2))
+    buttonMonitor3.set_on_button_press(lambda: turnOnLed(2))
 
     buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
-    buttonMonitor4.set_on_button_press(lambda: controller.turn_on(3))
+    buttonMonitor4.set_on_button_press(lambda: turnOnLed(3))
 
 
     while True:
         await asyncio.sleep(1)  # Wait before reconnecting
-        controller.turn_off_all()
+        
 
 
 if __name__ == "__main__":
