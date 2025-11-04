@@ -16,16 +16,16 @@ async def turnOnLed(index):
 async def main():
 
     buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-    buttonMonitor1.set_on_button_press(lambda: turnOnLed(0))
+    buttonMonitor1.set_on_button_press(lambda: asyncio.run(controller.turn_on(0)))
 
     buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
-    buttonMonitor2.set_on_button_press(lambda: turnOnLed(1))
+    buttonMonitor2.set_on_button_press(lambda: asyncio.run(controller.turn_on(1)))
 
     buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
-    buttonMonitor3.set_on_button_press(lambda: turnOnLed(2))
+    buttonMonitor3.set_on_button_press(lambda: asyncio.run(controller.turn_on(2)))
 
     buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
-    buttonMonitor4.set_on_button_press(lambda: turnOnLed(3))
+    buttonMonitor4.set_on_button_press(lambda: asyncio.run(controller.turn_on(3)))
 
 
     while True:
