@@ -7,8 +7,7 @@ import sys
 BUTTON_PINS = [24, 22, 27, 17]
 CHIP_NUMBER = 0
 
-async def main(ROLE):
-    uri = "ws://localhost:8080/dcr" 
+async def main():
 
     buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
     buttonMonitor1.set_on_button_press(lambda: asyncio.run(controller.turn_on(0)))
