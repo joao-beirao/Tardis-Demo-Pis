@@ -29,7 +29,8 @@ async def main():
 
 
     while True:
-        await asyncio.sleep(1)  # Wait before reconnecting
+        await asyncio.sleep(2)  # Wait before reconnecting
+        controller.turn_off_all()
         
 
 
