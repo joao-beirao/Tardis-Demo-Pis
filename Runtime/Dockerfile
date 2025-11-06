@@ -1,4 +1,4 @@
-FROM openjdk:21
+FROM openjdk:26-ea-21
 # LABEL authors="Pedro Akos Costa"
 
 WORKDIR /app

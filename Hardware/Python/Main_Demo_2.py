@@ -7,11 +7,11 @@ import aiohttp
 import threading
 import LedControll_Demo as controller
 import ButtonControll as button_control
-from EventExecution_2 import executeConsume, executeReplyForecast, executeReplyConsume, executeAccept, executeRequestForecast, executeAccounting, executeConsumeCo, executeReplyConsumeCo
 import argparse
-
-BUTTON_PINS = [24, 22, 27, 17]
+from EventExecution_2 import executeEvent
 CHIP_NUMBER = 0
+BUTTON_PINS = [24, 22, 27, 17]
+
 
 # Events tracked Choreography #2
 # P
@@ -205,29 +205,29 @@ async def main(ROLE):
 
     if ROLE == "P":
         buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-        buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeConsume(MainApp_instance.getLastConsumeID() )))
+        buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastConsumeID() )))
 
         buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
-        buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeReplyForecast(MainApp_instance.getLastReplyID() )))
+        buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastReplyID() )))
 
         buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
-        buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeAccept(MainApp_instance.getLastAcceptID())))
+        buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastAcceptID())))
 
         buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
-        buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeReplyConsume(MainApp_instance.getLastReplyConsumeID())))
+        buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastReplyConsumeID())))
     if ROLE == "CO":
 
         buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
-        buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeConsumeCo(MainApp_instance.getLastConsumeCOID() )))
+        buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastConsumeCOID() )))
     
         buttonMonitor2 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[1])
-        buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeReplyConsumeCo(MainApp_instance.getLastReplyCOID() )))
+        buttonMonitor2.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastReplyCOID() )))
 
         buttonMonitor3 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[2])
-        buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeAccounting(MainApp_instance.getLastAccountingID())))
+        buttonMonitor3.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastAccountingID())))
 
         buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
-        buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeRequestForecast(MainApp_instance.getLastRequestForecastID())))
+        buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastRequestForecastID())))
 
 
 
