@@ -25,17 +25,17 @@ services:
       - "1235:8080"
 #    networks:
 #      - dcr-network
-#  p_3_1:
-#    build:
-#      context: .
-#    image: dcr-babel
-#    hostname: "p-3-1.local"
-#    command:
-#      - role=P
-#      - id=3
-#      - cid=1
-#    ports:
-#      - "1236:8080"
+  p_3_1:
+    build:
+      context: .
+    image: dcr-babel
+    hostname: "p-3-1.local"
+    command:
+      - role=P
+      - id=3
+      - cid=1
+    ports:
+      - "1236:8080"
 #    networks:
 #      - dcr-network
   p_1_2:
@@ -51,17 +51,17 @@ services:
       - "1237:8080"
 #    networks:
 #      - dcr-network
-  p_2_2:
-    build:
-      context: .
-    image: dcr-babel
-    hostname: "p-2-2.local"
-    command:
-      - role=P
-      - id=2
-      - cid=2
-    ports:
-      - "1238:8080"
+#  p_2_2:
+#    build:
+#      context: .
+#    image: dcr-babel
+#    hostname: "p-2-2.local"
+#    command:
+#      - role=P
+#      - id=2
+#      - cid=2
+#    ports:
+#      - "1238:8080"
 #    networks:
 #      - dcr-network
 #  p_3_2:
