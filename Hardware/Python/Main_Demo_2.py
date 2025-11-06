@@ -36,6 +36,11 @@ class MainApp:
         self.last_accept_id = ""
         self.last_reply_consume_id = ""
 
+        self.last_request_forecast_id = ""
+        self.last_accounting_id = ""
+        self.last_reply_co_id = ""
+        self.last_consume_co_id = ""
+
     def getLastConsumeID(self):
         return self.last_consume_id
     def getLastReplyID(self):
@@ -143,14 +148,17 @@ class MainApp:
             if reply_consume:
                 self.controller.turn_on(3)
             # CO
-            if request_forecast:
-                self.controller.turn_on(3)
-            if accounting:
-                self.controller.turn_on(2)
-            if reply_co:
-                self.controller.turn_on(1)
             if consume_co:
                 self.controller.turn_on(0)
+            if reply_co:
+                self.controller.turn_on(1)
+            if accounting:
+                self.controller.turn_on(2)
+            if request_forecast:
+                self.controller.turn_on(3)
+
+
+
 
 
         except Exception as e:

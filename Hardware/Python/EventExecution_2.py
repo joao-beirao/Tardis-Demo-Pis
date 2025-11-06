@@ -3,7 +3,7 @@ import aiohttp
 ######################################
 #
 # EVENT EXECUTION FUNCTIONS
-# FOR CHOREOGRAPHY 1
+# FOR CHOREOGRAPHY 2
 #
 ######################################
 
