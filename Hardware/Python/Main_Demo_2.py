@@ -18,7 +18,7 @@ BUTTON_PINS = [24, 22, 27, 17]
 CONSUME = "consume"
 DECISION = "decision"
 REPLY_F_CAST = "reply_fcast"
-REPLY_CONSUME = "csm_reply"
+REPLY_CONSUME = "reply"
 # CO
 CONSUME_CO = "Consume_CO"
 ACCOUNTING = "Accounting"
@@ -223,6 +223,7 @@ async def main(ROLE):
 
         buttonMonitor4 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[3])
         buttonMonitor4.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastReplyConsumeID())))
+
     if ROLE == "CO":
 
         buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
