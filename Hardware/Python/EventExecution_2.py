@@ -18,15 +18,18 @@ async def execute(URL, BODY):
             print(f"PUT request sent. Response: {resp_data}")
 
 async def executeEvent(id):
-    payload = {
-        "eventID": f"{id}",
-        "value": {
-            "type": "Unit",
-            "value": ""
+    if(id == ""):
+        print("No event to execute.")
+        return
+    else:
+        payload = {
+            "eventID": f"{id}",
+            "value": {
+                "type": "Unit",
+                "value": ""
+            }
         }
-    }
-    await execute(URL(id), payload)
-
+        await execute(URL(id), payload)
 
 
 

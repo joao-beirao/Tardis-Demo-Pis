@@ -210,7 +210,7 @@ async def main(ROLE):
 
     def run_websocket():
         asyncio.run(MainApp_instance.listen_websocket(uri))
-
+    
     if ROLE == "P":
         buttonMonitor1 = button_control.ButtonMonitor(CHIP_NUMBER , BUTTON_PINS[0])
         buttonMonitor1.set_on_button_press(lambda: asyncio.run(executeEvent(MainApp_instance.getLastConsumeID() )))
